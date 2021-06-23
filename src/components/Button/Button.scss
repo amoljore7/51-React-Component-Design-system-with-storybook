@@ -1,14 +1,16 @@
-$background-color: #0561a7;
+@import "src/globalStyle/style.scss";
+
+$background-color-primary: #0561a7;
 $transparent: transparent;
 $white-color: #ffffff;
 $grey-color: #393939;
-$small-button-padding: 6px 12px;
-$medium-button-padding: 10px 12px;
-$large-button-padding: 14px 16px;
+$small-button-padding: $padding-01 $padding-03;
+$medium-button-padding: $padding-02 $padding-03;
+$large-button-padding: $padding-04 $padding-05;
 $small-button-fontSize: 12px;
 $medium-button-fontSize: 14px;
 $large-button-fontSize: 16px;
-$border-radius: 3px;
+$border-radius: $brds-03;
 $border: none;
 $display: flex;
 $align-items: center;
@@ -34,7 +36,7 @@ $transparent: transparent;
 
 .button {
   border: $border;
-  background-color: $background-color;
+  background-color: $background-color-primary;
   color: $white-color;
   padding: $large-button-padding;
   text-align: $text-align;
@@ -47,7 +49,7 @@ $transparent: transparent;
   @include flexProps;
 }
 .primary {
-  background-color: $background-color;
+  background-color: $background-color-primary;
 }
 .secondary {
   @include commonColor;
