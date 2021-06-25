@@ -17,13 +17,9 @@ export default {
   },
 };
 
-const onClickEvent = () => {
-  alert("Button clicked");
-};
-
 const Template = (args) => (
-  <Button onClick={onClickEvent} {...args}>
-    <img src={circularIcon} style={{ marginRight: "0.5rem" }} />
+  <Button {...args}>
+    {/* <img src={circularIcon} style={{ marginRight: "0.5rem" }} /> */}
     Button
   </Button>
 );
@@ -33,11 +29,7 @@ ButtonWithIcon.args = {
   size: "btn-large",
 };
 
-const Template1 = (args) => (
-  <Button onClick={onClickEvent} {...args}>
-    Button
-  </Button>
-);
+const Template1 = (args) => <Button {...args}>Button</Button>;
 export const ButtonWithoutIcon = Template1.bind({});
 ButtonWithoutIcon.args = {
   size: "btn-large",
