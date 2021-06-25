@@ -19,7 +19,7 @@ export default {
 
 const Template = (args) => (
   <Button {...args}>
-    {/* <img src={circularIcon} style={{ marginRight: "0.5rem" }} /> */}
+    <img src={circularIcon} style={{ marginRight: "0.5rem" }} />
     Button
   </Button>
 );
