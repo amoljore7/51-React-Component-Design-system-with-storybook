@@ -1,14 +1,10 @@
 import React from "react";
 import "./Button.scss";
 function Button(props) {
-  const { variant, size, backgroundColor, children, ...rest } = props;
+  const { variant, size, children, ...rest } = props;
   return (
     <>
-      <button
-        class={`button ${variant} ${size}`}
-        style={backgroundColor && { backgroundColor }}
-        {...rest}
-      >
+      <button class={`btn ${variant} ${size}`} {...rest}>
         {children}
       </button>
     </>

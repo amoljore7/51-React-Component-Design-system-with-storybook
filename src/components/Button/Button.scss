@@ -1,72 +1,121 @@
 @import "src/globalStyle/style.scss";
+@import "src/components/global-style/color.scss";
+@import "src/components/global-style/font-fmaily.scss";
+@import "src/components/global-style/paddings-border.scss";
+@import "src/components/global-style/typography.scss";
 
-$background-color-primary: #0561a7;
-$transparent: transparent;
-$white-color: #ffffff;
-$grey-color: #393939;
-$small-button-padding: $padding-01 $padding-03;
-$medium-button-padding: $padding-02 $padding-03;
-$large-button-padding: $padding-04 $padding-05;
-$small-button-fontSize: 12px;
-$medium-button-fontSize: 14px;
-$large-button-fontSize: 16px;
-$border-radius: $brds-03;
-$border: none;
-$display: flex;
-$align-items: center;
-$justify-content: center;
-$text-align: center;
-$text-decoration: none;
-$text-transform: capitalize;
-$cursor: pointer;
-$transparent: transparent;
-
-@mixin commonColor {
-  background-color: $transparent;
-  color: $grey-color;
-}
-@mixin commonPadding($paddingProps) {
-  padding: $paddingProps;
-}
-@mixin flexProps {
-  display: $display;
-  align-items: $align-items;
-  justify-content: $justify-content;
+@mixin transparentButton {
+  background-color: transparent;
+  color: $secondary-txt-color;
 }
 
-.button {
-  border: $border;
-  background-color: $background-color-primary;
-  color: $white-color;
-  padding: $large-button-padding;
-  text-align: $text-align;
-  text-decoration: $text-decoration;
-  text-transform: $text-transform;
-  font-size: $large-button-fontSize;
-  border-radius: $border-radius;
-  cursor: $cursor;
+.btn {
+  border-radius: $brds-03;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  background-color: $primary-intr-color;
+  font-size: $btn-txt-fontSize-03;
+}
 
-  @include flexProps;
+.btn-primary {
+  background-color: $primary-intr-color;
 }
-.primary {
-  background-color: $background-color-primary;
+
+.btn-secondary {
+  border: $border-radius-01 solid $secondary-txt-color;
+  @include transparentButton;
 }
-.secondary {
-  @include commonColor;
-  border: 1px solid $grey-color;
+.btn-textOnly {
+  @include transparentButton;
 }
-.textOnly {
-  @include commonColor;
+
+.btn-small {
+  padding: $padding-01 $padding-03;
+  font-size: $btn-txt-fontSize-01;
 }
-.small {
-  @include commonPadding($small-button-padding);
-  font-size: $small-button-fontSize;
+
+.btn-medium {
+  padding: $padding-02 $padding-03;
+  font-size: $btn-txt-fontSize-02;
 }
-.medium {
-  @include commonPadding($medium-button-padding);
-  font-size: $medium-button-fontSize;
+
+.btn-large {
+  padding: $padding-04 $padding-05;
+  font-size: $btn-txt-fontSize-03;
 }
-.large {
-  @include commonPadding($large-button-padding);
-  font-size: $large-button-fontSize;
-}
+
+// $background-color-primary: #0561a7;
+// $transparent: transparent;
+// $white-color: #ffffff;
+// $grey-color: #393939;
+// $small-button-padding: $padding-01 $padding-03;
+// $medium-button-padding: $padding-02 $padding-03;
+// $large-button-padding: $padding-04 $padding-05;
+// $small-button-fontSize: 12px;
+// $medium-button-fontSize: 14px;
+// $large-button-fontSize: 16px;
+// $border-radius: $brds-03;
+// $border: none;
+// $display: flex;
+// $align-items: center;
+// $justify-content: center;
+// $text-align: center;
+// $text-decoration: none;
+// $text-transform: capitalize;
+// $cursor: pointer;
+// $transparent: transparent;
+
+// @mixin commonColor {
+//   background-color: $transparent;
+//   color: $grey-color;
+// }
+// @mixin commonPadding($paddingProps) {
+//   padding: $paddingProps;
+// }
+// @mixin flexProps {
+//   display: $display;
+//   align-items: $align-items;
+//   justify-content: $justify-content;
+// }
+
+// .button {
+//   border: $border;
+//   background-color: $background-color-primary;
+//   color: $white-color;
+//   padding: $large-button-padding;
+//   text-align: $text-align;
+//   text-decoration: $text-decoration;
+//   text-transform: $text-transform;
+//   font-size: $large-button-fontSize;
+//   border-radius: $border-radius;
+//   cursor: $cursor;
+
+//   @include flexProps;
+// }
+// .primary {
+//   background-color: $background-color-primary;
+// }
+// .secondary {
+//   @include commonColor;
+//   border: 1px solid $grey-color;
+// }
+// .textOnly {
+//   @include commonColor;
+// }
+// .small {
+//   @include commonPadding($small-button-padding);
+//   font-size: $small-button-fontSize;
+// }
+// .medium {
+//   @include commonPadding($medium-button-padding);
+//   font-size: $medium-button-fontSize;
+// }
+// .large {
+//   @include commonPadding($large-button-padding);
+//   font-size: $large-button-fontSize;
+// }

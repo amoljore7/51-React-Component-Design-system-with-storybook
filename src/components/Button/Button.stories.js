@@ -6,11 +6,11 @@ export default {
   component: Button,
   argTypes: {
     variant: {
-      options: ["primary", "secondary", "textOnly"],
+      options: ["btn-primary", "btn-secondary", "btn-textOnly"],
       control: { type: "radio" },
     },
     size: {
-      options: ["small", "medium", "large"],
+      options: ["btn-small", "btn-medium", "btn-large"],
       control: { type: "radio" },
     },
     backgroundColor: { control: "color" },
@@ -29,8 +29,8 @@ const Template = (args) => (
 );
 export const ButtonWithIcon = Template.bind({});
 ButtonWithIcon.args = {
-  variant: "primary",
-  size: "large",
+  variant: "btn-primary",
+  size: "btn-large",
 };
 
 const Template1 = (args) => (
@@ -40,7 +40,7 @@ const Template1 = (args) => (
 );
 export const ButtonWithoutIcon = Template1.bind({});
 ButtonWithoutIcon.args = {
-  size: "large",
+  size: "btn-large",
 };
 
 // export const Large = () => <Button size="large">Button</Button>;
