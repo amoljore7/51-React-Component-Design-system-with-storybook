@@ -14,18 +14,17 @@ function App({ classes }) {
     "Italy",
   ]);
 
-  // const selected = (crumb) => {
-  //   console.log(">>>>", crumb);
-  // };
+  const selected = (crumb) => {
+    console.log(">>>>", crumb);
+  };
 
   return (
     <div className="App">
-      {/* <Button variant="primary">
+      <Button variant="primary">
         <img src={favicon} style={{ marginRight: "0.5rem" }} />
         Primary
-      </Button> */}
-      {/* <Breadcrumb crumbs={crumbs} selected={selected} /> */}
-      <h1>hi</h1>
+      </Button>
+      <Breadcrumb crumbs={crumbs} selected={selected} />
     </div>
   );
 }
