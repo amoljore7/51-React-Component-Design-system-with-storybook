@@ -1,0 +1,51 @@
+@import '../../global-style/color.scss';
+@import '../../global-style/font-fmaily.scss';
+
+$card-width: 181px;
+$image-width: 100px;
+$card-title-width: 151px;
+$card-title-height: 35px;
+$card-border-width: 0.5px;
+$card-border-radius: 3px;
+$card-title-letter-spacing: 0.45px;
+$card-title-text-color: #161616;
+$image-margin-topBottom: 16px;
+$image-margin-leftRight: 42px;
+$card-title-margin-top: 0px;
+$card-title-margin-leftRight: 16px;
+$card-title-margin-bottom: 16px;
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  width: $card-width;
+  height: $card-width;
+  border: $card-border-width solid $card-border;
+  border-radius: $card-border-radius;
+  cursor: pointer;
+  &:hover {
+    background: $subtle-border;
+  }
+}
+
+.card-img-container {
+  width: $image-width;
+  height: $image-width;
+  margin: $image-margin-topBottom $image-margin-leftRight;
+}
+
+.img-style {
+  width: 100%;
+  height: 100%;
+}
+
+.card-title-style {
+  width: $card-title-width;
+  height: $card-title-height;
+  margin: $card-title-margin-top $card-title-margin-leftRight
+    $card-title-margin-bottom;
+  text-align: center;
+  color: $card-title-text-color;
+  letter-spacing: $card-title-letter-spacing;
+  font-family: $font-type-01;
+}

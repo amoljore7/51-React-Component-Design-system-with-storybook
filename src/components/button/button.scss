@@ -1,0 +1,67 @@
+@import '../../global-style/index.scss';
+// font-size
+$font-size-small: 12px;
+$font-size-medium: 14px;
+$font-size-large: 16px;
+// padding
+$padding-topBottom-small: 6px;
+$padding-leftRight-small: 12px;
+
+$padding-topBottom-medium: 10px;
+$padding-leftRight-medium: 12px;
+
+$padding-topBottom-large: 14px;
+$padding-leftRight-large: 16px;
+// border
+$border-width: 1px;
+$border-radius: 3px;
+
+@mixin transparentButton {
+  background-color: transparent;
+  color: $secondary-txt-color;
+}
+
+.btn {
+  border-radius: $border-radius;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  background-color: $primary-intr-color;
+  padding: $padding-topBottom-large $padding-leftRight-large;
+  font-size: $font-size-large;
+  color: $interactive-txt-color;
+}
+.btn:active,
+.btn:focus {
+  border: $border-width solid $high-contrast-border;
+}
+.btn-primary {
+  background-color: $primary-intr-color;
+}
+
+.btn-secondary {
+  border: $border-width solid $secondary-txt-color;
+  @include transparentButton;
+}
+.btn-textOnly {
+  @include transparentButton;
+}
+
+.btn-small {
+  padding: $padding-topBottom-small $padding-leftRight-small;
+  font-size: $font-size-small;
+}
+
+.btn-medium {
+  padding: $padding-topBottom-medium $padding-leftRight-medium;
+  font-size: $font-size-medium;
+}
+
+.btn-large {
+  padding: $padding-topBottom-large $padding-leftRight-large;
+  font-size: $font-size-large;
+}

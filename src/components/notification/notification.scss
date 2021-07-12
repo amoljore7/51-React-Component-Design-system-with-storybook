@@ -1,0 +1,132 @@
+@import '../../global-style/index.scss';
+
+.notification-container {
+  font-size: 14px;
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 999999;
+}
+
+.top-right {
+  top: 12px;
+  right: 12px;
+  transition: transform 0.6s ease-in-out;
+  animation: toast-in-right 0.7s;
+}
+
+.bottom-right {
+  bottom: 12px;
+  right: 12px;
+  transition: transform 0.6s ease-in-out;
+  animation: toast-in-right 0.7s;
+}
+
+.top-left {
+  top: 12px;
+  left: 12px;
+  transition: transform 0.6s ease-in;
+  animation: toast-in-left 0.7s;
+}
+
+.bottom-left {
+  bottom: 12px;
+  left: 12px;
+  transition: transform 0.6s ease-in;
+  animation: toast-in-left 0.7s;
+}
+
+.notification {
+  transition: 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  opacity: 0.9;
+  background-color: #067fdb;
+  width: 365px;
+  padding: 10px 15px 5px 10px;
+}
+
+.notification:hover {
+  cursor: pointer;
+}
+
+.notification-title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+.notification-message {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.notification-errorList {
+  margin-left: 25px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notification-image {
+  float: left;
+  margin-right: 15px;
+}
+
+.notification-image img {
+  width: 16px;
+  height: 16px;
+}
+
+.notification-container button {
+  float: right;
+  font-weight: 700;
+  color: #fff;
+  outline: none;
+  font-size: 16px;
+  cursor: pointer;
+  background: 0 0;
+  border: 0;
+}
+.success {
+  background-color: #24a148;
+  color: #ffffff;
+}
+
+.error {
+  background-color: #e15c5c;
+  color: #ffffff;
+}
+
+.info {
+  background-color: #067fdb;
+  color: #ffffff;
+}
+
+.warning {
+  background-color: #f1c21b;
+  color: #161616;
+}
+.formError {
+  background-color: #ffd3d5;
+  color: #da1e28;
+}
+
+@keyframes toast-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes toast-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

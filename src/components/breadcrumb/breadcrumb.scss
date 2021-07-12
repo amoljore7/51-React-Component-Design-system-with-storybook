@@ -1,0 +1,54 @@
+@import "../../global-style/index.scss";
+
+$font-size: 14px;
+$font-weight: 400px;
+$leter-spacing: 0.45px;
+$seperator-leftRight-margin: 16px;
+$margin-0: 0;
+
+.breadcrumb-container {
+    list-style-type: none;
+    text-align: left;
+}
+.breadcrumb-item {
+    display: inline-block;
+    font-size: $font-size;
+    font-family: $font-type-01;
+    letter-spacing: $leter-spacing;
+    font-weight: $font-weight;
+}
+
+.breadcrumb-item,
+.breadcrumb-item a,
+.breadcrumb-item a:visited,
+.breadcrumb-item a:focus,
+.breadcrumb-item a:hover {
+    text-decoration: none;
+    color: $info-color;
+}
+
+.breadcrumb-item a:hover,
+.breadcrumb-item span:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-item-seperator,
+.breadcrumb-item-last a,
+.breadcrumb-item-last a:visited,
+.breadcrumb-item-last a:focus,
+.breadcrumb-item-last a:hover {
+    text-decoration: none;
+    color: $primary-txt-color;
+}
+
+.breadcrumb-item-seperator {
+    margin: $margin-0 $seperator-leftRight-margin;
+}
+
+.breadcrumb-item span:nth-child(2):hover {
+    text-decoration: none;
+}
+
+.breadcrumb-overflow-item {
+    color: $info-color;
+}
