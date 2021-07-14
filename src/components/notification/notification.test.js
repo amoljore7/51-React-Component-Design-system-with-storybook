@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Notification from './notification';
 import checkIcon from '../../icons/check.svg';
 
@@ -22,14 +22,13 @@ describe('Unit tests for Notification component', () => {
     '- This is a error list toast component.',
     '- This is a error list toast component.',
   ];
-
-  // it('icon passed in the props appears on the screen', () => {
-  //   const props = {
-  //     icon: checkIcon,
-  //   };
-  //   const { getByRole } = render(<Notification {...props} />);
-  //   expect(getByRole('img').src).toEqual(props.icon);
-  // });
+  it('icon passed in the props appears on the screen', () => {
+    const props = {
+      icon: checkIcon,
+    };
+    const { getByRole } = render(<Notification {...props} />);
+    expect(getByRole('imageIcon').src).toEqual('http://localhost/check.svg');
+  });
 
   it('Check Top Left Notification', () => {
     const { container } = render(<Notification position={positionTopLeft} />);
@@ -58,13 +57,6 @@ describe('Unit tests for Notification component', () => {
     };
     const { getByText } = render(<Notification {...props} />);
     expect(getByText(props.title)).toBeInTheDocument();
-  });
-  it('Description passed in the props appears on the screen', () => {
-    const props = {
-      description: 'this is an alert message',
-    };
-    const { getByText } = render(<Notification {...props} />);
-    expect(getByText(props.description)).toBeInTheDocument();
   });
 
   it('form error list passed in the props appears on the screen', () => {

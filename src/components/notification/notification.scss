@@ -1,48 +1,55 @@
 @import '../../global-style/index.scss';
 
+// font-size
+$font-size: 14px;
+$font-size-errorList: 12px;
+// icon width & height
+$icon-width: 20px;
+$icon-height: 20px;
+// padding
+$padding-topRightBottomLeft-notification: 5px 10px;
+$padding-topRightBottomLeft-container: 0.5rem 0;
+// margin
+$margin-topRightBottomLeft-errorList: 5px 0px 5px 25px;
+$margin-right-img: 15px;
+$margin-bottom-title: 6px;
+
 .notification-container {
-  font-size: 14px;
+  padding: $padding-topRightBottomLeft-container;
   box-sizing: border-box;
-  position: fixed;
+  display: flex;
   z-index: 999999;
-}
-
-.top-right {
-  top: 12px;
-  right: 12px;
-  transition: transform 0.6s ease-in-out;
-  animation: toast-in-right 0.7s;
-}
-
-.bottom-right {
-  bottom: 12px;
-  right: 12px;
-  transition: transform 0.6s ease-in-out;
-  animation: toast-in-right 0.7s;
+  font-family: $font-type-01;
 }
 
 .top-left {
-  top: 12px;
-  left: 12px;
+  justify-content: flex-start;
   transition: transform 0.6s ease-in;
   animation: toast-in-left 0.7s;
+}
+.top-right {
+  justify-content: flex-end;
+  transition: transform 0.6s ease-in-out;
+  animation: toast-in-right 0.7s;
 }
 
 .bottom-left {
-  bottom: 12px;
-  left: 12px;
+  margin-top: 85vh;
   transition: transform 0.6s ease-in;
   animation: toast-in-left 0.7s;
 }
+.bottom-right {
+  margin-top: 85vh;
+  transition: transform 0.6s ease-in-out;
+  animation: toast-in-right 0.7s;
+}
 
 .notification {
-  transition: 0.3s ease;
-  position: relative;
   overflow: hidden;
   opacity: 0.9;
-  background-color: #067fdb;
-  width: 365px;
-  padding: 10px 15px 5px 10px;
+  background-color: $info-color;
+  width: 100%;
+  padding: $padding-topRightBottomLeft-notification;
 }
 
 .notification:hover {
@@ -50,67 +57,61 @@
 }
 
 .notification-title {
-  font-weight: 700;
-  font-size: 16px;
+  font-size: $font-size;
   margin-top: 0;
-  margin-bottom: 6px;
+  margin-bottom: $margin-bottom-title;
+}
+.notification-title a {
+  margin-left: 5px;
+  color: inherit;
 }
 
-.notification-message {
-  margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 .notification-errorList {
-  margin-left: 25px;
+  margin: $margin-topRightBottomLeft-errorList;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: $font-size-errorList;
 }
 
 .notification-image {
   float: left;
-  margin-right: 15px;
+  margin-right: $margin-right-img;
 }
 
 .notification-image img {
-  width: 16px;
-  height: 16px;
+  width: $icon-width;
+  height: $icon-height;
 }
 
-.notification-container button {
+.close-button {
   float: right;
-  font-weight: 700;
-  color: #fff;
-  outline: none;
-  font-size: 16px;
   cursor: pointer;
   background: 0 0;
   border: 0;
 }
 .success {
-  background-color: #24a148;
-  color: #ffffff;
+  background-color: $success-color;
+  color: $interactive-txt-color;
 }
 
 .error {
-  background-color: #e15c5c;
-  color: #ffffff;
+  background-color: $error-bg-color;
+  color: $interactive-txt-color;
 }
 
 .info {
-  background-color: #067fdb;
-  color: #ffffff;
+  background-color: $info-color;
+  color: $interactive-txt-color;
 }
 
 .warning {
-  background-color: #f1c21b;
-  color: #161616;
+  background-color: $warning-color;
+  color: $primary-txt-color;
 }
 .formError {
-  background-color: #ffd3d5;
-  color: #da1e28;
+  background-color: $form-error-bg-color;
+  color: $error-txt-color;
 }
 
 @keyframes toast-in-right {

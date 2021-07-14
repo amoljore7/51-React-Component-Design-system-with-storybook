@@ -1,48 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './notification.scss';
+import close from './asset/close.svg';
+import closeInvert from './asset/close-invert.svg';
+import { imageRole, errorRole } from './constants';
+import { classes } from './constants';
 
 const Notification = (props) => {
   const {
     position,
     title,
-    description,
     icon,
     type,
-    duration,
     errorList,
-    width,
+    duration,
+    link,
+    text,
   } = props;
 
   const [showNotification, setShowNotification] = useState(true);
 
   useEffect(() => {
-    if (duration) {
-      setTimeout(() => {
-        setShowNotification(false);
-      }, duration);
+    {
+      type !== 'formError' &&
+        setTimeout(() => {
+          setShowNotification(false);
+        }, duration || 4000);
     }
-  }, [duration]);
+  }, []);
 
   return (
     showNotification && (
       <div className={`notification-container ${position}`}>
-        <div className={`notification ${type}`} style={{ width: width }}>
-          <button onClick={() => setShowNotification(false)}>X</button>
-          <div className="notification-image">
-            {icon && <img role="img" src={icon} alt="icon" />}
+        <div className={`notification ${type}`}>
+          {type !== 'formError' && (
+            <img
+              className={classes.closeButton}
+              src={type == 'warning' ? close : closeInvert}
+              alt={type}
+              onClick={() => setShowNotification(false)}
+            />
+          )}
+          <div className={classes.image}>
+            {icon && <img role={imageRole} src={icon} alt={title} />}
           </div>
           <div>
-            {title && <p className="notification-title">{title}</p>}
-            {description && (
-              <p className="notification-message">{description}</p>
+            {title && (
+              <p className={classes.title}>
+                {title}
+                <a href={link} target="_blank">
+                  {text}
+                </a>
+              </p>
             )}
             {errorList && errorList.length
               ? errorList.map((index) => (
                   <p
                     key={index}
-                    data-testid="errorItem"
-                    className="notification-errorList"
+                    data-testid={errorRole}
+                    className={classes.errorList}
                   >
                     {index}
                   </p>
@@ -58,11 +74,12 @@ const Notification = (props) => {
 Notification.propTypes = {
   position: PropTypes.string,
   title: PropTypes.string,
-  description: PropTypes.string,
   icon: PropTypes.string,
   type: PropTypes.string,
   duration: PropTypes.number,
   errorList: PropTypes.array,
+  link: PropTypes.string,
+  text: PropTypes.string,
 };
 
 export default Notification;
