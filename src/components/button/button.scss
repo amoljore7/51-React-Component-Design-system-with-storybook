@@ -1,27 +1,36 @@
 @import '../../global-style/index.scss';
 // font-size
-$font-size-small: 12px;
-$font-size-medium: 14px;
-$font-size-large: 16px;
+$font-size-small: getRem(12px);
+$font-size-medium: getRem(14px);
+$font-size-large: getRem(16px);
+
+// height
+$height-small-btn: getRem(24px);
+$height-medium-btn: getRem(32px);
+$height-large-btn: getRem(40px);
+
 // padding
-$padding-topBottom-small: 6px;
-$padding-leftRight-small: 12px;
+$padding-top-small: getRem(2px);
+$padding-bottom-small: getRem(3px);
+$padding-left-small: getRem(8px);
+$padding-right-small: getRem(8px);
 
-$padding-topBottom-medium: 10px;
-$padding-leftRight-medium: 12px;
+$padding-top-medium: getRem(6px);
+$padding-bottom-medium: getRem(7px);
+$padding-left-medium: getRem(16px);
+$padding-right-medium: getRem(16px);
 
-$padding-topBottom-large: 14px;
-$padding-leftRight-large: 16px;
+$padding-top-large: getRem(10px);
+$padding-bottom-large: getRem(11px);
+$padding-left-large: getRem(16px);
+$padding-right-large: getRem(16px);
+
 // border
-$border-width: 1px;
-$border-radius: 3px;
+$border-width: getRem(1px);
+$border-radius: getRem(3px);
 
-@mixin transparentButton {
-  background-color: transparent;
-  color: $secondary-txt-color;
-}
-
-.btn {
+.bds-btn {
+  font-family: $font-type-01;
   border-radius: $border-radius;
   display: flex;
   align-items: center;
@@ -31,37 +40,81 @@ $border-radius: 3px;
   border: none;
   cursor: pointer;
   background-color: $primary-intr-color;
-  padding: $padding-topBottom-large $padding-leftRight-large;
-  font-size: $font-size-large;
-  color: $interactive-txt-color;
 }
-.btn:active,
-.btn:focus {
-  border: $border-width solid $high-contrast-border;
-}
-.btn-primary {
+
+.bds-btn-primary {
   background-color: $primary-intr-color;
+  color: $interactive-txt-color;
+  &:active,
+  &:focus {
+    background-color: $blue-90;
+  }
+  &:hover {
+    background-color: $blue-60-hover;
+  }
 }
 
-.btn-secondary {
-  border: $border-width solid $secondary-txt-color;
-  @include transparentButton;
-}
-.btn-textOnly {
-  @include transparentButton;
+.bds-btn-secondary {
+  border: $border-width solid $med-contrast-border;
+  background-color: transparent;
+  color: $secondary-txt-color;
+  &:active,
+  &:focus {
+    background-color: $gray-30;
+  }
+  &:hover {
+    background-color: $gray-20;
+  }
 }
 
-.btn-small {
-  padding: $padding-topBottom-small $padding-leftRight-small;
+.bds-btn-textOnly {
+  background-color: transparent;
+  color: $secondary-txt-color;
+  &:active,
+  &:focus {
+    background-color: $gray-30;
+  }
+  &:hover {
+    background-color: $gray-20;
+  }
+}
+
+.bds-btn-small {
+  height: $height-small-btn;
   font-size: $font-size-small;
+  padding-top: $padding-top-small;
+  padding-bottom: $padding-bottom-small;
+  padding-left: $padding-left-small;
+  padding-right: $padding-right-small;
 }
 
-.btn-medium {
-  padding: $padding-topBottom-medium $padding-leftRight-medium;
+.bds-btn-medium {
+  height: $height-medium-btn;
   font-size: $font-size-medium;
+  padding-top: $padding-top-medium;
+  padding-bottom: $padding-bottom-medium;
+  padding-left: $padding-left-medium;
+  padding-right: $padding-right-medium;
 }
 
-.btn-large {
-  padding: $padding-topBottom-large $padding-leftRight-large;
+.bds-btn-large {
+  height: $height-large-btn;
   font-size: $font-size-large;
+  padding-top: $padding-top-large;
+  padding-bottom: $padding-bottom-large;
+  padding-left: $padding-left-large;
+  padding-right: $padding-right-large;
+}
+
+.bds-btn-primary.bds-btn-disabled {
+  cursor: default;
+  opacity: 70%;
+}
+.bds-btn-secondary.bds-btn-disabled {
+  cursor: default;
+  opacity: 35%;
+}
+.bds-btn-textOnly.bds-btn-disabled {
+  cursor: default;
+  opacity: 35%;
 }

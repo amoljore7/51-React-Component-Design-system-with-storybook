@@ -1,15 +1,13 @@
 export const classes = {
-    container: 'breadcrumb-container',
-    item: 'breadcrumb-item',
-    lastItem: 'breadcrumb-item-last',
-    overflowItem: 'breadcrumb-overflow-item',
-    seperator: 'breadcrumb-item-seperator',
-  }
+  container: 'bds-breadcrumb-container',
+  item: 'bds-breadcrumb-item',
+  lastItem: 'bds-breadcrumb-item-last',
+  overflowItem: 'bds-breadcrumb-overflow-item',
+  separator: 'bds-breadcrumb-item-separator',
+};
 
 export const defaultLength = 3;
-
-export const keyPrefix = "breadcrumbitem_";
-
-export const listRole = "list";
-
-export const defaultTabIndex = 0;
+export const keyPrefix = 'breadcrumbitem_';
+export const listRole = 'list';
+export const tabIndex = 0;
+export const target = '_blank';

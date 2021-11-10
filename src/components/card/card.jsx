@@ -1,21 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import './card.scss';
-import { Card as CardClasses, defaultTabIndex, imageRole } from './constants';
+import { classes, defaultTabIndex, imageRole } from './constants';
 
-const Card = ({ title, image, clickHandler }) => {
+const Card = ({ title, image, clickHandler, disabled = false }) => {
+  const cardClass = {
+    [classes.container]: true,
+    [classes.containerDisabled]: disabled,
+  };
+
   return (
-    <div className={CardClasses.container} onClick= {clickHandler} tabindex="0">
-      <div className={CardClasses.imgContainer}>
+    <div
+      data-testid="card"
+      className={classNames({ ...cardClass })}
+      onClick={disabled ? null : clickHandler}
+      tabIndex={defaultTabIndex}
+    >
+      <div className={classes.imgContainer}>
         <img
-          tabindex={defaultTabIndex}
+          tabIndex={defaultTabIndex}
           role={imageRole}
-          className={CardClasses.imgStyle}
+          className={classes.imgStyle}
           src={image}
           alt={title}
+          aria-label={title}
         />
       </div>
-      <div className={CardClasses.titleStyle}>{title}</div>
+      <div className={classes.titleStyle}>{title}</div>
     </div>
   );
 };
@@ -25,6 +37,5 @@ Card.propTypes = {
   image: PropTypes.string.isRequired,
   clickHandler: PropTypes.func.isRequired,
 };
-
 
 export default Card;

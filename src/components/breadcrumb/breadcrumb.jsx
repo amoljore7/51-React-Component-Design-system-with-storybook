@@ -1,109 +1,107 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {
-  defaultLength,
-  defaultListRole,
-  defaultTabIndex,
-  keyPrefix,
-  classes,
-} from './constants'
+import { defaultLength, listRole, tabIndex, keyPrefix, classes, target } from './constants';
 import './breadcrumb.scss';
 
-const renderBreadcrumbCompressed = (props) => {
-  const firstItem = props.linkToNameList[0];
-  const lastItem = props.linkToNameList[props.linkToNameList.length - 1];
-
+const renderBreadcrumbCompressed = ({ history, routeToNameList, expansionHandlder }) => {
+  const firstItem = routeToNameList[0];
+  const lastItem = routeToNameList[routeToNameList.length - 1];
   return (
-    <ul role={defaultListRole} className={classes.container}>
+    <ul role={listRole} className={classes.container}>
       <BreadcrumbItem
-        link={firstItem.link}
+        route={firstItem.route}
         name={firstItem.name}
-        clickHandler={props.clickHandler}
+        href={firstItem.href}
         key={`${keyPrefix}0`}
+        history={history}
       />
       <BreadcrumbItem
         overflowItem={true}
-        expansionHandlder={props.expansionHandlder}
+        expansionHandlder={expansionHandlder}
         key={`${keyPrefix}1`}
       />
       <BreadcrumbItem
-        link={lastItem.link}
+        route={lastItem.route}
         name={lastItem.name}
+        href={lastItem.href}
         isLastItem={true}
-        clickHandler={props.clickHandler}
         key={`${keyPrefix}2`}
+        history={history}
       />
     </ul>
   );
 };
-const renderBreadcrumbExpander = (props) => {
+const renderBreadcrumbExpander = ({ history, routeToNameList }) => {
   return (
-    <ul role={defaultListRole} className={classes.container}>
-      {props.linkToNameList &&
-        props.linkToNameList.map((element, index) => {
-          const link = element.link;
-          const name = element.name;
-          const isLastItem = index == props.linkToNameList.length - 1;
-          const allProps = { link, name, isLastItem };
-          return (
-            <BreadcrumbItem key={`${keyPrefix}${index}`} {...allProps} clickHandler={props.clickHandler} />
-          );
+    <ul role={listRole} className={classes.container}>
+      {routeToNameList &&
+        routeToNameList.map((element, index) => {
+          const { route, name, href } = element;
+          const isLastItem = index === routeToNameList.length - 1;
+          const allProps = { route, name, isLastItem, href, history };
+          return <BreadcrumbItem key={`${keyPrefix}${index}`} {...allProps} />;
         })}
     </ul>
   );
 };
 
-const Breadcrumb = (props) => {
-  const [isCompressed, setIsCompressed] = useState(
-    props.linkToNameList.length > defaultLength
-  );
+const Breadcrumb = ({ routeToNameList, history }) => {
+  const [isCompressed, setIsCompressed] = useState(routeToNameList.length > defaultLength);
   const expansionHandlder = () => {
     setIsCompressed(false);
   };
 
   return isCompressed
-    ? renderBreadcrumbCompressed({ ...props, expansionHandlder })
-    : renderBreadcrumbExpander(props);
+    ? renderBreadcrumbCompressed({
+        routeToNameList,
+        expansionHandlder,
+        history,
+      })
+    : renderBreadcrumbExpander({ routeToNameList, history });
 };
 
-const BreadcrumbItem = (props) => {
+const BreadcrumbItem = ({
+  history,
+  href,
+  route,
+  name,
+  isLastItem,
+  expansionHandlder,
+  overflowItem,
+}) => {
   const breadcrumbItemClasses = {
     [classes.item]: true,
-    [classes.lastItem]: props.isLastItem,
+    [classes.lastItem]: isLastItem,
   };
   const clickHandler = (event) => {
-    props.clickHandler && props.clickHandler(event);
+    !href && event.preventDefault();
+    !href && history && route && history.push(route);
   };
-  return !props.overflowItem ? (
-    <li className={classNames(breadcrumbItemClasses)} tabIndex={defaultTabIndex}>
-      <a href={props.link} onClick={clickHandler}>
-        {props.name}
+  return !overflowItem ? (
+    <li className={classNames(breadcrumbItemClasses)} tabIndex={tabIndex}>
+      <a href={href} onClick={clickHandler} target={target}>
+        {name}
       </a>
-      {!props.isLastItem && <span className={classes.seperator}>/</span>}
+      {!isLastItem && <span className={classes.separator}>/</span>}
     </li>
   ) : (
     <li
       className={classNames(breadcrumbItemClasses)}
-      onClick={() => props.expansionHandlder()}
-      tabIndex={defaultTabIndex}
+      onClick={() => expansionHandlder()}
+      tabIndex={tabIndex}
     >
       <span>...</span>
-      <span className={classes.seperator}>/</span>
+      <span className={classes.separator}>/</span>
     </li>
   );
 };
 Breadcrumb.propTypes = {
-  linkToNameList:
-    PropTypes.arrayOf(
-      PropTypes.shape(
-        {
-          link: PropTypes.string,
-          name: PropTypes.string.isRequired
-        }
-      ).isRequired
-    )
-  ,
-  clickHandler: PropTypes.func,
-}
+  routeToNameList: PropTypes.arrayOf(
+    PropTypes.shape({
+      route: PropTypes.string,
+      name: PropTypes.string.isRequired,
+    }).isRequired
+  ),
+};
 export default Breadcrumb;

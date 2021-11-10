@@ -1,55 +1,33 @@
 @import '../../global-style/index.scss';
 
-// font-size
-$font-size: 14px;
-$font-size-errorList: 12px;
-// icon width & height
-$icon-width: 20px;
-$icon-height: 20px;
-// padding
-$padding-topRightBottomLeft-notification: 5px 10px;
-$padding-topRightBottomLeft-container: 0.5rem 0;
-// margin
-$margin-topRightBottomLeft-errorList: 5px 0px 5px 25px;
-$margin-right-img: 15px;
-$margin-bottom-title: 6px;
+$z-index-notif: 9999;
+
+$font-size: getRem(14px);
+
+$line-height-title: getRem(19px);
+$margin-top-title: getRem(7px);
+$margin-bottom-title: getRem(8px);
+
+$icon-width: getRem(24px);
+$icon-height: getRem(24px);
+$margin-left-icon: getRem(16px);
+$margin-right-icon: getRem(8px);
+$margin-top-icon: getRem(8px);
+$margin-bottom-icon: getRem(8px);
+$margin-left-icon-close: getRem(8px);
+$margin-right-icon-close: getRem(16px);
 
 .notification-container {
-  padding: $padding-topRightBottomLeft-container;
-  box-sizing: border-box;
-  display: flex;
-  z-index: 999999;
   font-family: $font-type-01;
-}
-
-.top-left {
-  justify-content: flex-start;
-  transition: transform 0.6s ease-in;
-  animation: toast-in-left 0.7s;
-}
-.top-right {
-  justify-content: flex-end;
-  transition: transform 0.6s ease-in-out;
-  animation: toast-in-right 0.7s;
-}
-
-.bottom-left {
-  margin-top: 85vh;
-  transition: transform 0.6s ease-in;
-  animation: toast-in-left 0.7s;
-}
-.bottom-right {
-  margin-top: 85vh;
-  transition: transform 0.6s ease-in-out;
-  animation: toast-in-right 0.7s;
+  box-sizing: border-box;
+  z-index: $z-index-notif;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .notification {
-  overflow: hidden;
-  opacity: 0.9;
   background-color: $info-color;
-  width: 100%;
-  padding: $padding-topRightBottomLeft-notification;
 }
 
 .notification:hover {
@@ -57,39 +35,48 @@ $margin-bottom-title: 6px;
 }
 
 .notification-title {
+  vertical-align: middle;
+  display: inline-block;
   font-size: $font-size;
-  margin-top: 0;
+  margin-top: $margin-top-title;
+  line-height: $line-height-title;
   margin-bottom: $margin-bottom-title;
 }
 .notification-title a {
-  margin-left: 5px;
   color: inherit;
 }
 
-.notification-errorList {
-  margin: $margin-topRightBottomLeft-errorList;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: $font-size-errorList;
-}
-
 .notification-image {
-  float: left;
-  margin-right: $margin-right-img;
+  display: inline-block;
+  margin-left: $margin-left-icon;
+  margin-right: $margin-right-icon;
+  .icon {
+    vertical-align: middle;
+    width: $icon-width;
+    height: $icon-height;
+    margin-top: $margin-top-icon;
+    margin-bottom: $margin-bottom-icon;
+  }
 }
 
-.notification-image img {
-  width: $icon-width;
-  height: $icon-height;
+.error-icon-color {
+  color: $default-page-bg;
+}
+
+.warning-icon-color {
+  color: $high-contrast-bg;
 }
 
 .close-button {
-  float: right;
+  vertical-align: middle;
+  display: inline-block;
   cursor: pointer;
-  background: 0 0;
-  border: 0;
+  margin-right: $margin-right-icon-close;
+  margin-left: $margin-left-icon-close;
+  margin-top: $margin-top-icon;
+  margin-bottom: $margin-bottom-icon;
 }
+
 .success {
   background-color: $success-color;
   color: $interactive-txt-color;
@@ -100,7 +87,7 @@ $margin-bottom-title: 6px;
   color: $interactive-txt-color;
 }
 
-.info {
+.general {
   background-color: $info-color;
   color: $interactive-txt-color;
 }
@@ -108,26 +95,4 @@ $margin-bottom-title: 6px;
 .warning {
   background-color: $warning-color;
   color: $primary-txt-color;
-}
-.formError {
-  background-color: $form-error-bg-color;
-  color: $error-txt-color;
-}
-
-@keyframes toast-in-right {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes toast-in-left {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
 }

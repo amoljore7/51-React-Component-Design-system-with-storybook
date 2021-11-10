@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import Button from './button';
 
 describe('Button component unit test cases', () => {
@@ -103,5 +103,16 @@ describe('Button component unit test cases', () => {
   it('Check Button false props', () => {
     const { container } = render(<Button variant={primaryVariant} />);
     expect(container.firstChild.classList.contains('btn-small')).toBe(false);
+  });
+
+  it('ClickHandler was called', () => {
+    const props = {
+      onClick: jest.fn(),
+    };
+
+    const { getByTestId } = render(<Button {...props} />);
+    const buttonComponent = getByTestId('button');
+    fireEvent.click(buttonComponent);
+    expect(props.onClick).toHaveBeenCalledTimes(1);
   });
 });

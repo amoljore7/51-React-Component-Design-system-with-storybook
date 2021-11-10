@@ -1,6 +1,7 @@
 import React from 'react';
-
 import Card from './card';
+import britiveLogo from '../../story-assets/images/britive-logo.jpg';
+import details from '../../story-assets/images/details.svg';
 
 export default {
   title: 'design-components/Card',
@@ -11,11 +12,23 @@ const CardTemplate = (args) => <Card {...args} />;
 
 export const CardWithImageAndTitle = CardTemplate.bind({});
 CardWithImageAndTitle.args = {
-  title: 'Britive',
-  image:
-    'https://media-exp1.licdn.com/dms/image/C560BAQEp7H79CM1XSg/company-logo_200_200/0/1621376300395?e=2159024400&v=beta&t=blE1LaLSAeEh_YoAvPfXeYElBDwYZQDWw6q1ZkE0YKs',
-  clickHandler: (event) => {
-    event.preventDefault();
-    alert(`Card with title Britive has been clicked`);
-  },
+  title: 'Static Secret Templates',
+  image: details,
+};
+
+CardWithImageAndTitle.args.clickHandler = function (event) {
+  event.preventDefault();
+  alert(`Card with title ${CardWithImageAndTitle.args.title} has been clicked`);
+};
+
+export const CardWithDisabled = CardTemplate.bind({});
+CardWithDisabled.args = {
+  title: 'Secret Governance',
+  image: britiveLogo,
+  disabled: true,
+};
+
+CardWithDisabled.args.clickHandler = function (event) {
+  event.preventDefault();
+  alert(`Card with title ${CardWithDisabled.args.title} has been clicked`);
 };

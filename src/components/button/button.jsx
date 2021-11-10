@@ -10,11 +10,18 @@ import {
   secondaryProp,
   smallProp,
   textOnlyProp,
+  defaultSize,
+  defaultVariant,
 } from './constants';
 
-const Button = (props) => {
-  const { variant, size, children, ...rest } = props;
-
+const Button = ({
+  variant = defaultVariant,
+  size = defaultSize,
+  children,
+  onClick,
+  disabled = false,
+  type,
+}) => {
   const btnClass = {
     [classes.button]: true,
     [classes.buttonPrimary]: variant === primaryProp,
@@ -23,10 +30,17 @@ const Button = (props) => {
     [classes.buttonSmall]: size === smallProp,
     [classes.buttonMedium]: size === mediumProp,
     [classes.buttonLarge]: size === largeProp,
+    [classes.disabled]: disabled,
   };
 
   return (
-    <button className={classNames({ ...btnClass })} {...rest}>
+    <button
+      data-testid="button"
+      className={classNames({ ...btnClass })}
+      onClick={onClick}
+      disabled={disabled}
+      type={type}
+    >
       {children}
     </button>
   );
@@ -36,6 +50,9 @@ Button.propTypes = {
   variant: PropTypes.string,
   size: PropTypes.string.isRequired,
   children: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 export default Button;

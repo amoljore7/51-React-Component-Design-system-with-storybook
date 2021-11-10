@@ -1,39 +1,103 @@
 import Button from './button.jsx';
-import circularIcon from '../../icons/circle.svg';
+import circularIcon from '../../story-assets/icons/circle.svg';
 
 export default {
   title: 'design-components/Button',
   component: Button,
-  argTypes: {
-    variant: {
-      options: ['primary', 'secondary', 'textOnly'],
-      control: { type: 'radio' },
-    },
-    size: {
-      options: ['small', 'medium', 'large'],
-      control: { type: 'radio' },
-    },
-  },
 };
 
-const ButtonWithIconTemplate = (args) => (
-  <Button {...args} onClick={() => alert('Button clicked')}>
-    <img src={circularIcon} alt="icon" style={{ marginRight: '0.5rem' }} />
-    Button
-  </Button>
-);
-export const ButtonWithIcon = ButtonWithIconTemplate.bind({});
-ButtonWithIcon.args = {
-  variant: 'primary',
-  size: 'large',
+export const Primary = () => {
+  return (
+    <Button variant="primary" size="large" type="submit" onClick={() => alert('Button clicked')}>
+      Button
+    </Button>
+  );
 };
 
-const ButtonWithoutIconTemplate = (args) => (
-  <Button {...args} onClick={() => alert('Button clicked')}>
-    Button
-  </Button>
-);
-export const ButtonWithoutIcon = ButtonWithoutIconTemplate.bind({});
-ButtonWithoutIcon.args = {
-  size: 'large',
+export const Secondary = () => {
+  return (
+    <Button variant="secondary" size="large" type="reset" onClick={() => alert('Button clicked')}>
+      Button
+    </Button>
+  );
+};
+
+export const TextOnly = () => {
+  return (
+    <Button variant="textOnly" size="large" onClick={() => alert('Button clicked')}>
+      Button
+    </Button>
+  );
+};
+
+export const Large = () => {
+  return (
+    <Button variant="primary" size="large" onClick={() => alert('Button clicked')}>
+      Button
+    </Button>
+  );
+};
+export const Medium = () => {
+  return (
+    <Button variant="primary" size="medium" onClick={() => alert('Button clicked')}>
+      Button
+    </Button>
+  );
+};
+export const Small = () => {
+  return (
+    <Button variant="primary" size="small" onClick={() => alert('Button clicked')}>
+      Button
+    </Button>
+  );
+};
+
+export const RightIcon = () => {
+  return (
+    <Button variant="primary" size="large" onClick={() => alert('Button clicked')}>
+      <img src={circularIcon} alt="icon" style={{ marginRight: '0.5rem' }} />
+      Button
+    </Button>
+  );
+};
+
+export const LeftIcon = () => {
+  return (
+    <Button variant="primary" size="large" onClick={() => alert('Button clicked')}>
+      Button
+      <img src={circularIcon} alt="icon" style={{ marginLeft: '0.5rem' }} />
+    </Button>
+  );
+};
+
+export const BothIcon = () => {
+  return (
+    <Button variant="primary" size="large" onClick={() => alert('Button clicked')}>
+      <img src={circularIcon} alt="icon" style={{ marginRight: '0.5rem' }} />
+      Button
+      <img src={circularIcon} alt="icon" style={{ marginLeft: '0.5rem' }} />
+    </Button>
+  );
+};
+
+export const PrimaryDisabled = () => {
+  return (
+    <Button variant="primary" size="medium" disabled={true}>
+      Disabled
+    </Button>
+  );
+};
+export const SecondaryDisabled = () => {
+  return (
+    <Button variant="secondary" size="medium" disabled={true}>
+      Disabled
+    </Button>
+  );
+};
+export const TextOnlyDisabled = () => {
+  return (
+    <Button variant="textOnly" size="medium" disabled={true}>
+      Disabled
+    </Button>
+  );
 };

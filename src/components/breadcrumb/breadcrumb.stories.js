@@ -1,84 +1,149 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  withRouter,
+} from 'react-router-dom';
 import Breadcrumb from './breadcrumb';
 
 export default {
   title: 'design-components/Breadcrumb',
   component: Breadcrumb,
   argTypes: {
-    linkToNameList: [],
-    clickHandler: {action: 'clicked'}
+    routeToNameList: [],
   },
 };
 
 const BreadcrumbTemplate = (args) => <Breadcrumb {...args} />;
 export const BreadcrumbGroup = BreadcrumbTemplate.bind({});
 BreadcrumbGroup.args = {
-  linkToNameList: [
+  routeToNameList: [
     {
-      link: '#',
+      href: 'https://google.com',
       name: 'Breadcrumb1',
     },
     {
-      link: '#',
+      route: 'https://google.com',
       name: 'Breadcrumb2',
     },
     {
-      link: '#',
       name: 'Breadcrumb3',
     },
   ],
 };
 
-const BreadCrumbClickedTemplate = (args) =>  <Breadcrumb {...args}/>
-export const BreadCrumbWithClickHandler = BreadCrumbClickedTemplate.bind({});
-BreadCrumbWithClickHandler.args = {
-  linkToNameList : [
-    {
-      link: '#',
-      name: 'Breadcrumb1',
-    },
-    {
-      link: '#',
-      name: 'Breadcrumb2',
-    },
-    {
-      link: '#',
-      name: 'Breadcrumb3',
-    },
-  ],
-  clickHandler: (event) => {
-    event.preventDefault();
-    // add your routing logic here
-    alert('The link:' + event.currentTarget.getAttribute('href') + ' with name:' + event.currentTarget.innerText + ' was clicked')
-  }
-}
-
 export const BreadcrumbWithOverflow = BreadcrumbTemplate.bind({});
 BreadcrumbWithOverflow.args = {
-  linkToNameList: [
+  routeToNameList: [
     {
-      link: '#',
+      route: '#',
       name: 'Breadcrumb1',
     },
     {
-      link: '#',
+      route: '#',
       name: 'Breadcrumb2',
     },
     {
-      link: '#',
+      route: '#',
       name: 'Breadcrumb3',
     },
     {
-      link: '#',
+      route: '#',
       name: 'Breadcrumb4',
     },
     {
-      link: '#',
+      route: '#',
       name: 'Breadcrumb5',
     },
   ],
-  clickHandler: (event) => {
-    event.preventDefault();
-    // add your routing logic here
-  }
+};
+
+export const BreadcrumbIntegrationWithReactRouter = () => {
+  // use the withRouter HOC and wrap it around breadcrumb
+  const BreadcrumbWithRouter = withRouter(Breadcrumb);
+  const Home = () => {
+    return <div> Welcome to home page.</div>;
+  };
+
+  const Dashboard = () => {
+    return (
+      <div>
+        <div>
+          <BreadcrumbWithRouter
+            routeToNameList={[
+              {
+                route: '/home',
+                name: 'home',
+              },
+              {
+                route: '/dashboard',
+                name: 'dashboard',
+              },
+            ]}
+          />
+        </div>
+        This is the Dashboard page.
+      </div>
+    );
+  };
+
+  const MgmtConsole = () => {
+    return (
+      <div>
+        <div>
+          <BreadcrumbWithRouter
+            routeToNameList={[
+              {
+                route: '/home',
+                name: 'home',
+              },
+              {
+                route: '/dashboard',
+                name: 'dashboard',
+              },
+              {
+                route: '/dashboard/console',
+                name: 'console',
+              },
+            ]}
+          />
+        </div>
+        <p>This is the Management console !!</p>
+      </div>
+    );
+  };
+  return (
+    <>
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/home">Home</Link>
+              </li>
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+              <li>
+                <Link to="/dashboard/console">Console</Link>
+              </li>
+            </ul>
+          </nav>
+          <Switch>
+            <Route path="/home">
+              <Home />
+            </Route>
+            <Route exact path="/dashboard">
+              <Dashboard />
+            </Route>
+            <Route exact path="/dashboard/console">
+              <MgmtConsole />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </>
+  );
 };
