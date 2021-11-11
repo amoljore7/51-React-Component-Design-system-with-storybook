@@ -1,5 +1,6 @@
 {
   "name": "react-component-design-system",
+  "homepage": "http://amoljore7.github.io/51-React-Component-Design-system-with-storybook",
   "version": "0.1.0",
   "dependencies": {
     "classnames": "^2.3.1",
@@ -16,8 +17,10 @@
     "build:transpile-utils": "babel src/utils -d core/utils --ignore '**/*.test.js','**/*.stories.js'",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build-storybook": "rm -rf public && mkdir public && build-storybook -s public",
-    "prepare": "npm run build"
+    "build-storybook": "build-storybook -o docs-build -s ./stories/assets",
+    "prepare": "npm run build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
@@ -50,6 +53,7 @@
     "babel-plugin-transform-scss": "^1.0.11",
     "eslint": "^7.29.0",
     "eslint-config-airbnb": "^18.2.1",
+    "gh-pages": "^3.2.3",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -58,6 +62,7 @@
   },
   "peerDependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "gh-pages": "^2.0.1"
   }
 }
