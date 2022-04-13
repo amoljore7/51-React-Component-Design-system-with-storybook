@@ -35,7 +35,7 @@ $page-range-font-weight: 600;
 $page-range-color: $gray-60;
 
 $pagination-root-z-index: 10000;
-$pagination-lable-font-size: getRem(14px);
+$pagination-label-font-size: getRem(14px);
 $pagination-label-color: $gray-60;
 
 $pagination-icon-size: getRem(24px);
@@ -51,6 +51,7 @@ $table-header-letter-spacing: getRem(0.16px);
 $table-header-border-width: getRem(0.5px);
 $table-header-font-weight: 600;
 $table-header-font-size: getRem(14px);
+$table-header-max-height: getRem(56px);
 
 $table-cell-border-color: $gray-30;
 $table-cell-text-color: $gray-80;
@@ -75,3 +76,7 @@ $overflow-menu-item-letter-spacing: getRem(0.32px);
 $overflow-menu-border-color: $gray-80;
 $overflow-menu-item-hover-background: $gray-20;
 $overflow-menu-border-size: getRem(1px);
+$resizer-hover-color: $blue-60-hover;
+$resize-width: getRem(4px);
+$resize-height: getRem(56px);
+$table-header-min-width: getRem(88px);

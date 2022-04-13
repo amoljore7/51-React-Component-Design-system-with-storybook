@@ -11,7 +11,15 @@ import {
 import TreeNode from './treeNode';
 import './tree.scss';
 
-const Tree = ({ nodes, clickHandler, expandIconClickHandler, actionClickHandler, topPadding }) => {
+const Tree = ({
+  nodes,
+  clickHandler,
+  expandIconClickHandler,
+  actionClickHandler,
+  topPadding,
+  selectedItemParents,
+  expandedItems,
+}) => {
   const container = useRef();
   const resizeLineRef = useRef();
   const resize = (event) => {
@@ -49,6 +57,8 @@ const Tree = ({ nodes, clickHandler, expandIconClickHandler, actionClickHandler,
     clickHandler,
     expandIconClickHandler,
     actionClickHandler,
+    selectedItemParents,
+    expandedItems,
   };
   return (
     <div className={TreeClass.boundingContainer}>
@@ -84,7 +94,7 @@ Tree.propTypes = {
       recursiveShapeType(
         {
           label: PropTypes.string.isRequired,
-          leaves: PropTypes.arrayOf(PropTypes.string),
+          leaves: PropTypes.arrayOf(PropTypes.object),
           hasChildren: PropTypes.bool.isRequired,
           actionItems: PropTypes.any,
           details: PropTypes.any,
@@ -97,6 +107,8 @@ Tree.propTypes = {
   topPadding: PropTypes.string,
   expandIconClickHandler: PropTypes.func.isRequired,
   actionClickHandler: PropTypes.func.isRequired,
+  expandedItems: PropTypes.array,
+  selectedItemParents: PropTypes.array.isRequired,
 };
 
 export default Tree;

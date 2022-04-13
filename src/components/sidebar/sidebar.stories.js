@@ -14,6 +14,7 @@ menu.args = {
   open: true,
   sidebarData: sidebarData,
   menuTitle: 'Secrets Manager',
+  title: 'SM',
 };
 
 export const Demo = () => {
@@ -29,7 +30,7 @@ export const Demo = () => {
           {isOpen ? 'Close Drawer' : 'Open Drawer'}
         </Button>
       </div>
-      <Sidebar sidebarData={sidebarData} open={isOpen} menuTitle="Secrets Manager" />
+      <Sidebar sidebarData={sidebarData} open={isOpen} menuTitle="Secrets Manager" title={'SM'} />
     </>
   );
 };
@@ -58,6 +59,7 @@ export const App = () => {
             open={isOpen}
             menuTitle="Secrets Manager"
             onClose={closeHandler}
+            title={'SM'}
           />
           <Switch>
             <Route path="/" exact component={BritiveVault} />

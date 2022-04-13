@@ -14,6 +14,7 @@ export const TreeNodeClasses = {
   parentContainer: 'tree-node-parent-container',
   parentIcon: 'tree-node-parent-icon',
   parentText: 'tree-node-parent-text',
+  actionIconHolder: 'tree-node-action-item-holder',
 };
 export const TreeClass = {
   boundingContainer: 'tree-bounding-container',

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Select from './select';
+import Button from '../button';
 
 export default {
   title: 'design-components/Select',
@@ -152,4 +153,67 @@ export const SmallDropdown = () => {
     },
   };
   return <Select {...props} />;
+};
+
+export const DropdownWithoutPortal = () => {
+  const [disablePortal, setDisablePortal] = useState(false);
+  const props = {
+    options: [{ title: 'secret-create' }, { title: 'secret-delete' }, { title: 'secret-update' }],
+    placeholder: 'Choose an option',
+    width: '500px',
+    label: 'Actions',
+    helperText: 'Choose actions for Permission',
+    onChange: (_, value) => console.log(value),
+    getOptionLabel: function (option) {
+      return option.title;
+    },
+    disablePortal,
+  };
+  return (
+    <div style={{ width: '600px', height: '600px', overflowY: 'scroll' }}>
+      <div
+        style={{
+          width: '400px',
+          height: '300px',
+          border: '1px solid salmon',
+          fontSize: '18px',
+          letterSpacing: '1px',
+          padding: '10%',
+        }}
+      >
+        Usually the options container is a portal and hence sits above all other elements. This can
+        cause problems if container has scrolling. <br />
+        <br />
+        <br />
+        Click on the dropdown and try to scroll this container.
+        <br />
+        <br />
+        Observe that options container remains fixed.
+        <br />
+        <div style={{ padding: '10%' }}>
+          <Button size="large" type="primary" onClick={() => setDisablePortal(!disablePortal)}>
+            {!disablePortal ? 'Disable Portal' : 'Enable Portal'} portal in dropdown
+          </Button>
+        </div>
+      </div>
+      <div style={{ margin: '20px' }}>
+        <Select {...props} />
+      </div>
+
+      <div
+        style={{
+          width: '400px',
+          height: '300px',
+          border: '1px solid teal',
+          textAlign: 'center',
+          padding: '10%',
+          paddingTop: '40%',
+          fontSize: '36px',
+          marginTop: '10%',
+        }}
+      >
+        some form content
+      </div>
+    </div>
+  );
 };

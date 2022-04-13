@@ -1,7 +1,6 @@
 @import '../../global-style/index.scss';
 
 $tooltip-border-radius: getRem(2px);
-$tooltip-height: getRem(32px);
 $tooltip-padding-left-right: getRem(8px);
 $tooltip-padding-top: getRem(4px);
 $tooltip-padding-bottom: getRem(6px);
@@ -9,8 +8,7 @@ $tooltip-padding-bottom: getRem(6px);
 .bds-tooltip-container {
   border-radius: $tooltip-border-radius;
   width: fit-content;
-  height: $tooltip-height;
-  max-height: $tooltip-height;
+  height: fit-content;
   padding-top: $tooltip-padding-top;
   padding-bottom: $tooltip-padding-bottom;
   padding-right: $tooltip-padding-left-right;

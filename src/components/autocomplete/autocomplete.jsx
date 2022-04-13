@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FiX } from 'react-icons/fi';
 import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
+import { shallowCompare } from '../../utils/helper-utils';
 
 const Autocomplete = ({
   options,
@@ -33,6 +34,7 @@ const Autocomplete = ({
   name,
   onBlur,
   error,
+  disablePortal = false,
 }) => {
   let selectedValues;
   let filteredOptions;
@@ -45,8 +47,10 @@ const Autocomplete = ({
 
   const filterSelectedOptionsFromOptions = (allOptions, selectedOptions) => {
     let optionsAfterFilter = [...allOptions];
-    for (let i in selectedOptions) {
-      optionsAfterFilter = optionsAfterFilter.filter((item) => item !== selectedOptions[i]);
+    for (const selectedOption of selectedOptions) {
+      optionsAfterFilter = optionsAfterFilter.filter(
+        (item) => !shallowCompare(item, selectedOption)
+      );
     }
     return optionsAfterFilter;
   };
@@ -60,7 +64,7 @@ const Autocomplete = ({
   const [filteredSuggestions, setFilteredSuggestions] = useState(filteredOptions);
   const [selectedOptions, setSelectedOptions] = useState(selectedValues);
   const [showOptions, setShowOptions] = useState(false);
-  const [containerDimension, setContainerDimension] = useState();
+  const [containerDimension, setContainerDimension] = useState({});
   const autocompleteRef = useRef();
 
   const getContainerDimension = () => {
@@ -321,19 +325,20 @@ const Autocomplete = ({
             </div>
           </div>
         )}
-        {showOptions && filteredSuggestions.length > 0 && (
-          <MenuOptions
-            portalContainerId={autocompletePortalId}
-            containerDimension={containerDimension}
-            width={width}
-            options={filteredSuggestions}
-            onChange={selectOption}
-            getOptionLabel={getOptionLabel}
-            getOptionIcon={getOptionIcon}
-            getOptionSublabel={getOptionSublabel}
-          />
-        )}
       </div>
+      {showOptions && filteredSuggestions.length > 0 && (
+        <MenuOptions
+          portalContainerId={autocompletePortalId}
+          containerDimension={containerDimension}
+          width={width}
+          options={filteredSuggestions}
+          onChange={selectOption}
+          getOptionLabel={getOptionLabel}
+          getOptionIcon={getOptionIcon}
+          getOptionSublabel={getOptionSublabel}
+          disablePortal={disablePortal}
+        />
+      )}
       {error ? (
         <div className={classes.autocompleteErrorMessage} style={{ width: width }}>
           {errorMessage}
@@ -360,6 +365,7 @@ Autocomplete.propTypes = {
   error: PropTypes.bool,
   name: PropTypes.string,
   onBlur: PropTypes.func,
+  disablePortal: PropTypes.bool,
 };
 
 export default Autocomplete;

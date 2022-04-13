@@ -50,7 +50,7 @@ export const sidebarData = [
         title: '3rd Party Vaults',
         route: '/3rd-party-vaults',
         icon: <IoIcons.IoMdPeople />,
-      },
+      }
     ],
   },
 ];

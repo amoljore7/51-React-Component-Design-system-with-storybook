@@ -29,6 +29,51 @@ export const DemoTree = () => {
             actionItems: [{ title: 'Add Folder' }],
             nodes: [
               {
+                label: 'Project Level1',
+                hasChildren: true,
+                details: { entityType: 'node' },
+                actionItems: [{ title: 'Add Folder' }],
+                nodes: [
+                  {
+                    label: 'Project Level2',
+                    hasChildren: true,
+                    details: { entityType: 'node' },
+                    nodes: [
+                      {
+                        label: 'Project Level3',
+                        hasChildren: true,
+                        details: { entityType: 'node' },
+                        nodes: [],
+                        actionItems: [{ title: 'Add Folder' }],
+                        leaves: [
+                          {
+                            label: 'Secret Level3',
+                            details: { entityType: 'leaf' },
+                            actionItems: [{ title: 'Delete Secret' }],
+                          },
+                        ],
+                      },
+                    ],
+                    actionItems: [{ title: 'Add Folder' }],
+
+                    leaves: [
+                      {
+                        label: 'Secret 37',
+                        details: { entityType: 'leaf' },
+                        actionItems: [{ title: 'Delete Secret' }],
+                      },
+                    ],
+                  },
+                ],
+                leaves: [
+                  {
+                    label: 'Secret 3',
+                    details: { entityType: 'leaf' },
+                    actionItems: [{ title: 'Delete Secret' }],
+                  },
+                ],
+              },
+              {
                 label: 'DB',
                 hasChildren: true,
                 details: { entityType: 'node' },
@@ -104,14 +149,36 @@ export const DemoTree = () => {
   const [isAddNodeModalOpen, setAddNodeModalOpen] = useState(false);
   const [newNodeName, setNewNodeName] = useState('');
   const [parentsWhereChildrenAreToBeAdded, setParentsWhereChildrenAreToBeAdded] = useState([]);
+  const [selectedItemParents, setSelectedItemParents] = useState([{ ...data }]);
+  const [expandedItems, setExpandedItems] = useState([]);
+
+  const expandViewHandler = (parents) => {
+    let isExpanded = false;
+    let expansionArray = [...expandedItems];
+    for (let i = 0; i < expandedItems.length; i++) {
+      if (expandedItems[i].length === parents.length) {
+        let counter = 0;
+        for (let j = 0; j < parents.length; j++) {
+          if (expandedItems[i][j].label !== parents[j].label) break;
+          else counter++;
+        }
+        if (counter === parents.length) {
+          isExpanded = true;
+          expansionArray.splice(i, 1);
+          setExpandedItems(expansionArray);
+          break;
+        }
+      }
+    }
+    if (!isExpanded) setExpandedItems([...expandedItems, parents]);
+  };
 
   const clickHandler = (parents, value) => {
-    console.log(parents);
-    setParentList([...parents]);
+    setSelectedItemParents([...parents]);
   };
 
   const expandIconClickHandler = (parents) => {
-    console.log(parents);
+    expandViewHandler(parents);
   };
 
   const actionClickHandler = (allParents, value) => {
@@ -134,6 +201,9 @@ export const DemoTree = () => {
           'node'
         );
         setTreeData({ ...treeData, nodes: updatedData });
+        const newSelectedItemParents = [...allParents];
+        newSelectedItemParents.splice(-1, 1);
+        setSelectedItemParents([...newSelectedItemParents]);
         break;
       }
       case 'Delete Secret': {
@@ -209,8 +279,13 @@ export const DemoTree = () => {
     const updatedData = getUpdatedData(treeData.nodes, parentsWhereChildrenAreToBeAdded, [
       { name: newNodeName, entityType: 'node' },
     ]);
+    const newSelectedItemParents = [
+      ...parentsWhereChildrenAreToBeAdded,
+      { label: newNodeName, entityType: 'node' },
+    ];
     setAddNodeModalOpen(false);
     setTreeData({ ...treeData, nodes: updatedData });
+    setSelectedItemParents([...newSelectedItemParents]);
   };
 
   const addNewFolderActionButtons = [
@@ -247,7 +322,6 @@ export const DemoTree = () => {
   return (
     <>
       <div style={{ marginBottom: '20px', width: 'fit-content' }}>
-        {' '}
         {renderParentList(parentList)}
       </div>
       <div style={{ width: 'fit-content', height: '400px' }}>
@@ -256,7 +330,9 @@ export const DemoTree = () => {
           nodes={treeData}
           clickHandler={clickHandler}
           expandIconClickHandler={expandIconClickHandler}
+          expandedItems={expandedItems}
           actionClickHandler={actionClickHandler}
+          selectedItemParents={selectedItemParents}
         />
       </div>
       {isAddNodeModalOpen && getAddNodeModal()}

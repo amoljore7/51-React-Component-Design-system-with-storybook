@@ -20,19 +20,24 @@ const Loader = ({ size, message }) => {
   );
 };
 
-const LoaderWithOverlay = ({ size, message }) => {
+const LoaderWithOverlay = ({ size, message, overlayOnContainer }) => {
+  const overlayClasses = {
+    [classes.loaderOverlay]: true,
+    [classes.loaderOverlayOnContainer]: overlayOnContainer,
+  };
+
   return (
-    <div data-testid={classes.loaderOverlay} className={classes.loaderOverlay}>
+    <div data-testid={classes.loaderOverlay} className={classNames({ ...overlayClasses })}>
       <Loader size={size} message={message} />
     </div>
   );
 };
 
-const Spinner = ({ size = spinnerSize.large, overlay, message }) => {
-  return !overlay ? (
+const Spinner = ({ size = spinnerSize.large, overlay, message, overlayOnContainer }) => {
+  return !overlay && !overlayOnContainer ? (
     <Loader size={size} message={message} />
   ) : (
-    <LoaderWithOverlay size={size} message={message} />
+    <LoaderWithOverlay size={size} message={message} overlayOnContainer={overlayOnContainer} />
   );
 };
 
@@ -40,6 +45,7 @@ Spinner.propTypes = {
   message: PropTypes.string,
   size: PropTypes.oneOf([spinnerSize.small, spinnerSize.medium, spinnerSize.large]),
   overlay: PropTypes.bool,
+  overlayOnContainer: PropTypes.bool,
 };
 
 export default Spinner;

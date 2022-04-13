@@ -18,22 +18,29 @@ export const DemoTable = () => {
   const [sortBy, setSortBy] = useState(undefined);
   const [sortOrder, setSortOrder] = useState(undefined);
 
-  useEffect(async () => {
+  const getInitialData = async () => {
     setLoading(true);
     const response = await apiWithSorting(pageSize, page + 1);
     setLoading(false);
     setTableData(response);
     if (response === null || response.length < pageSize) setLastPage(true);
     else setLastPage(false);
-  }, []);
+  };
 
-  useEffect(async () => {
+  const getTableData = async () => {
     setLoading(true);
     const response = await apiWithSorting(pageSize, page + 1, sortBy, sortOrder);
     setLoading(false);
     response && setTableData(response);
     if (response === null || response.length < pageSize) setLastPage(true);
     else setLastPage(false);
+  };
+  useEffect(() => {
+    getInitialData();
+  }, []);
+
+  useEffect(() => {
+    getTableData();
   }, [page, pageSize, sortBy, sortOrder]);
 
   const onPageChange = (value) => {
@@ -61,17 +68,17 @@ export const DemoTable = () => {
       field: 'id',
       headerName: 'Id',
       sortable: true,
-      width: '150px',
+      width: '27%',
       horizontalAlignment: 'right',
     },
     {
-      width: '35%',
+      width: '10%',
       field: 'lastName',
       headerName: 'Lastname',
       horizontalAlignment: 'left',
     },
     {
-      width: '25%',
+      width: '50%',
       field: 'firstName',
       headerName: 'Firstname',
       sortable: true,
@@ -98,7 +105,7 @@ export const DemoTable = () => {
       },
     },
     {
-      width: '40%',
+      width: '13%',
       field: 'age',
       headerName: 'Age',
     },
@@ -178,7 +185,9 @@ export const DemoTable = () => {
         />
       )}
       <div style={{ width: '300px', height: '40px' }}>{loading && 'Loading...'} </div>
-      <Table {...props} />
+      <div>
+        <Table resizableColumns={true} {...props} />
+      </div>
     </>
   );
 };

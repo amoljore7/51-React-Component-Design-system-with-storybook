@@ -33,10 +33,12 @@ const Pill = ({ error = false, disabled = false, readOnly = false, label, onDele
 
   return (
     <div className={classNames({ ...pillContainerClasses })}>
-      <span className={classNames({ ...pillLabelClasses })}>{label}</span>
+      <div title={label} className={classNames({ ...pillLabelClasses })}>
+        {label}
+      </div>
       {!readOnly ? (
         <div
-          data-testid='pill-close-icon'
+          data-testid="pill-close-icon"
           className={classes.pillIconContainer}
           onClick={deleteIconClickHandler}
           onMouseOver={() => {

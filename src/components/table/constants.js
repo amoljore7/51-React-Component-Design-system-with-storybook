@@ -4,8 +4,11 @@ export const classes = {
   render: 'bds-table-cell-render',
   cellRender: 'bds-table-cell-custom',
   row: 'bds-table-row',
+  resizer: 'bds-table-resizer',
+  resizerHover: 'bds-table-resizer-hover',
   header: 'bds-table-header-row',
   headerCell: 'bds-table-header-cell',
+  headerCellContainer: 'bds-table-header-cell-container',
   headerText: 'bds-table-header-text',
   headerIcon: 'bds-table-header-icon',
   headerTextIconContainer: 'bds-table-header-text-icon',
@@ -25,6 +28,7 @@ export const classes = {
   pageNavigationDisabled: 'bds-pagination-navigation-disabled',
   paginationControls: 'bds-pagination-controls',
   searchContainer: 'bds-table-search-container',
+  sortIconResizeContainer: 'bds-table-sort-icon-resize-container',
   table: 'bds-table',
 };
 export const paginationIconSize = 16;
@@ -52,3 +56,10 @@ export const sortingType = {
   ascending: 'ascending',
   descending: 'descending',
 };
+export const mousedownEvent = 'mousedown';
+export const mousemoveEvent = 'mousemove';
+export const mouseupEvent = 'mouseup';
+export const columnMinWidthPixels = '88px';
+export const columnMinWidth = 88;
+export const HUNDRED_DECIMAL = 100.0;
+export const resizerWidth = 4;

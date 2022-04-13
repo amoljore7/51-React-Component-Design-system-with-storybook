@@ -25,7 +25,15 @@ const renderDirectionIcon = (expanded) => {
     <BiChevronRight size={defaultIconSize} />
   );
 };
-const LeafNode = ({ leave, level, clickHandler, parents, actionClickHandler }) => {
+const LeafNode = ({
+  leave,
+  level,
+  clickHandler,
+  parents,
+  actionClickHandler,
+  selectedItemParents,
+  actionItems,
+}) => {
   const contentBoxRef = useRef();
   const [selected, setSelected] = useState(false);
   const [isHover, setHover] = useState(false);
@@ -34,16 +42,24 @@ const LeafNode = ({ leave, level, clickHandler, parents, actionClickHandler }) =
       trackingLineInitialWidth + trackingLineRestWidth * level
     }px`;
   }, []);
-  const handleOnBlur = (event) => {
-    if (contentBoxRef && contentBoxRef.current && !contentBoxRef.current.contains(event.target))
-      setSelected(false);
-  };
+
   useEffect(() => {
-    document.addEventListener(mousedownEvent, handleOnBlur);
-    return () => {
-      document.removeEventListener(mousedownEvent, handleOnBlur);
-    };
-  }, []);
+    setSelected(false);
+    const nextArrayLength = selectedItemParents?.length;
+    let nextCounter = 0;
+    if (parents?.length <= selectedItemParents?.length)
+      for (let i = 0; i < nextArrayLength; i++) {
+        if (
+          parents[i] &&
+          selectedItemParents[i] &&
+          parents[i]?.label === selectedItemParents[i]?.label
+        )
+          nextCounter++;
+        else break;
+      }
+    if (nextCounter === nextArrayLength) setSelected(true);
+  });
+
   const leafClass = {
     [TreeNodeClasses.contentBoxContainer]: true,
     [TreeNodeClasses.contentBoxSelect]: selected,
@@ -52,7 +68,6 @@ const LeafNode = ({ leave, level, clickHandler, parents, actionClickHandler }) =
     <div
       className={classNames({ ...leafClass })}
       onClick={() => {
-        setSelected(true);
         clickHandler(parents);
       }}
       tabIndex={tabIndex}
@@ -68,20 +83,22 @@ const LeafNode = ({ leave, level, clickHandler, parents, actionClickHandler }) =
             <span>{leave.label}</span>
           </div>
         </div>
-        {isHover && (
-          <OverflowMenu
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            options={leave.actionItems}
-            getOptionLabel={(option) => option.title}
-            onChange={(event, value) => {
-              event.stopPropagation();
-              setHover(false);
-              actionClickHandler(parents, value);
-            }}
-          />
-        )}
+        <div className={TreeNodeClasses.actionIconHolder}>
+          {isHover && Boolean(actionItems.length) && (
+            <OverflowMenu
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              options={leave.actionItems}
+              getOptionLabel={(option) => option.title}
+              onChange={(event, value) => {
+                event.stopPropagation();
+                setHover(false);
+                actionClickHandler(parents, value);
+              }}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
@@ -91,6 +108,7 @@ const ParentNode = ({
   name,
   actionItems,
   expansionHandler,
+  expandedItems,
   expanded,
   level,
   parents,
@@ -100,6 +118,7 @@ const ParentNode = ({
   actionClickHandler,
   expandIconClickHandler,
   hasChildren,
+  selectedItemParents,
 }) => {
   const parentRef = useRef();
   const parentContainerRef = useRef();
@@ -113,21 +132,38 @@ const ParentNode = ({
     }px`;
   }, []);
 
-  const handleOnBlur = (event) => {
-    if (
-      parentContainerRef &&
-      parentContainerRef.current &&
-      !parentContainerRef.current.contains(event.target)
-    )
-      setSelected(false);
-  };
+  useEffect(() => {
+    for (let i = 0; i < expandedItems?.length; i++) {
+      if (expandedItems[i]?.length === parents?.length) {
+        let counter = 0;
+        for (let j = 0; j < parents.length; j++) {
+          if (expandedItems[i][j]?.label !== parents[j]?.label) break;
+          else counter++;
+        }
+        if (counter === parents?.length) {
+          expansionHandler();
+          break;
+        }
+      }
+    }
+  }, []);
 
   useEffect(() => {
-    document.addEventListener(mousedownEvent, handleOnBlur);
-    return () => {
-      document.removeEventListener(mousedownEvent, handleOnBlur);
-    };
-  }, []);
+    setSelected(false);
+    const parentsArrayLength = selectedItemParents?.length;
+    let nextCounter = 0;
+    if (parents?.length <= selectedItemParents?.length)
+      for (let i = 0; i < parentsArrayLength; i++) {
+        if (
+          parents[i] &&
+          selectedItemParents[i] &&
+          parents[i]?.label === selectedItemParents[i]?.label
+        )
+          nextCounter++;
+        else break;
+      }
+    if (nextCounter === parentsArrayLength) setSelected(true);
+  });
 
   const parentNodeClass = {
     [TreeNodeClasses.parentNodeContainer]: true,
@@ -140,7 +176,6 @@ const ParentNode = ({
       className={classNames({ ...parentNodeClass })}
       ref={parentContainerRef}
       onClick={() => {
-        setSelected(true);
         clickHandler(parents);
       }}
       tabIndex={tabIndex}
@@ -155,7 +190,7 @@ const ParentNode = ({
               onClick={(e) => {
                 e.stopPropagation();
                 expansionHandler();
-                !expanded && expandIconClickHandler && expandIconClickHandler(parents);
+                expandIconClickHandler && expandIconClickHandler(parents);
               }}
               tabIndex={expandIconTabIndex}
             >
@@ -167,20 +202,22 @@ const ParentNode = ({
           </div>
           <div className={TreeNodeClasses.parentText}>{name}</div>
         </div>
-        {isHover && (
-          <OverflowMenu
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            options={actionItems}
-            getOptionLabel={(option) => option.title}
-            onChange={(event, value) => {
-              event.stopPropagation();
-              setHover(false);
-              actionClickHandler(parents, value);
-            }}
-          />
-        )}
+        <div className={TreeNodeClasses.actionIconHolder}>
+          {isHover && Boolean(actionItems.length) && (
+            <OverflowMenu
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              options={actionItems}
+              getOptionLabel={(option) => option.title}
+              onChange={(event, value) => {
+                event.stopPropagation();
+                setHover(false);
+                actionClickHandler(parents, value);
+              }}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
@@ -192,6 +229,8 @@ const TreeNode = ({
   clickHandler,
   expandIconClickHandler,
   actionClickHandler,
+  selectedItemParents,
+  expandedItems,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const borderNode = useRef();
@@ -218,6 +257,7 @@ const TreeNode = ({
     actionItems: nodes.actionItems,
     hasChildren: nodes.hasChildren,
     expansionHandler,
+    expandedItems,
     expanded,
     level,
     isNodesEmpty,
@@ -226,6 +266,7 @@ const TreeNode = ({
     clickHandler,
     actionClickHandler,
     expandIconClickHandler,
+    selectedItemParents,
   };
   return (
     <div className={TreeNodeClasses.container} ref={containerNode}>
@@ -241,6 +282,8 @@ const TreeNode = ({
             key: `${treeNodeKey}-${nodes.label}-${index}`,
             actionClickHandler,
             expandIconClickHandler,
+            selectedItemParents,
+            expandedItems,
           };
           return <TreeNode {...treeNodeProps} />;
         })}
@@ -249,11 +292,13 @@ const TreeNode = ({
         nodes.leaves.map((leave, index) => {
           const leafNodeProps = {
             clickHandler: clickHandler,
+            actionItems: leave.actionItems,
             leave: leave,
             level,
             parents: [...parents, { ...nodes }, { ...leave }],
             key: `${leafNodeKey}-${nodes.label}-${index}`,
             actionClickHandler,
+            selectedItemParents,
           };
           return <LeafNode {...leafNodeProps} />;
         })}

@@ -15,6 +15,7 @@ const MenuOptions = ({
   containerDimension,
   value,
   portalContainerId,
+  disablePortal = false,
 }) => {
   const [optionsContainerHeight, setOptionsContainerHeight] = useState(0);
   const [optionsContainerWidth, setOptionsContainerWidth] = useState(0);
@@ -22,41 +23,94 @@ const MenuOptions = ({
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
   const [optionsEl] = useState(document.createElement('div'));
   optionsEl.id = `${portalContainerId}`;
-  optionsEl.style.position = 'absolute';
   optionsEl.style.zIndex = 3000;
-  optionsEl.style.top = 0;
-  optionsEl.style.left = 0;
   optionsEl.style.backgroundColor = 'white';
 
   let bottomWidth, rightWidth, left, top;
-  if (containerDimension) {
-    bottomWidth = `${vh - containerDimension.bottom}`;
-    rightWidth = `${vw - containerDimension.left}`;
-    left =
-      `${rightWidth}` < optionsContainerWidth
-        ? containerDimension.right - optionsContainerWidth
-        : containerDimension.left;
-    top =
-      `${bottomWidth}` < optionsContainerHeight
-        ? containerDimension.top - optionsContainerHeight
-        : containerDimension.bottom;
+  if (!disablePortal) {
+    optionsEl.style.position = 'absolute';
+    optionsEl.style.top = 0;
+    optionsEl.style.left = 0;
+    if (containerDimension) {
+      bottomWidth = `${vh - containerDimension.bottom}`;
+      rightWidth = `${vw - containerDimension.left}`;
+      left =
+        `${rightWidth}` < optionsContainerWidth
+          ? containerDimension.right - optionsContainerWidth
+          : containerDimension.left;
+      top =
+        `${bottomWidth}` < optionsContainerHeight
+          ? containerDimension.top - optionsContainerHeight
+          : containerDimension.bottom;
+    }
+
+    optionsEl.style.transform =
+      containerDimension &&
+      `translate3d(${left + window.pageXOffset}px,${top + window.pageYOffset}px,0)`;
   }
-  optionsEl.style.transform =
-    containerDimension &&
-    `translate3d(${left + window.pageXOffset}px,${top + window.pageYOffset}px,0)`;
 
   useEffect(() => {
-    const bodyElement = document.getElementsByTagName('body')[0];
-    bodyElement.appendChild(optionsEl);
-    const optionsElHeight = optionsEl.getBoundingClientRect().height;
-    const optionsElWidth = optionsEl.getBoundingClientRect().width;
-    setOptionsContainerHeight(optionsElHeight);
-    setOptionsContainerWidth(optionsElWidth);
-    return () => bodyElement.removeChild(optionsEl);
+    if (!disablePortal) {
+      const bodyElement = document.getElementsByTagName('body')[0];
+      bodyElement.appendChild(optionsEl);
+      const optionsElHeight = optionsEl.getBoundingClientRect().height;
+      const optionsElWidth = optionsEl.getBoundingClientRect().width;
+      setOptionsContainerHeight(optionsElHeight);
+      setOptionsContainerWidth(optionsElWidth);
+      return () => bodyElement.removeChild(optionsEl);
+    }
   }, [optionsEl, options]);
 
-  const optionContainerClasses = {
-    [classes.optionsContainer]: true,
+  const optionsListProps = {
+    options,
+    getOptionLabel,
+    getOptionSublabel,
+    getOptionIcon,
+    value,
+    onChange,
+    width,
+    disablePortal,
+  };
+
+  return disablePortal ? (
+    <div style={{ position: 'relative' }}>
+      <OptionsList {...optionsListProps} />
+    </div>
+  ) : (
+    createPortal(<OptionsList {...optionsListProps} />, optionsEl)
+  );
+};
+
+const OptionsList = ({
+  options,
+  getOptionLabel,
+  getOptionSublabel,
+  getOptionIcon,
+  value,
+  onChange,
+  width,
+  disablePortal,
+}) => {
+  const isOptionSelected = (item) => {
+    let isOptionSelected = false;
+    for (let i in value) {
+      if (value[i] === item) {
+        isOptionSelected = true;
+        break;
+      }
+    }
+    return isOptionSelected;
+  };
+
+  const isOptionDisabled = (item) => {
+    return Boolean(item.isDisabled);
+  };
+
+  const labelClasses = {
+    [classes.optionLabel]: true,
+    [classes.optionLabelWithSublabel]: Boolean(getOptionLabel) && Boolean(getOptionSublabel),
+    [classes.optionLabelAlone]:
+      Boolean(getOptionLabel) && !Boolean(getOptionSublabel) && !Boolean(getOptionIcon),
   };
 
   const optionClasses = {
@@ -75,33 +129,17 @@ const MenuOptions = ({
       Boolean(getOptionLabel) && !Boolean(getOptionSublabel) && Boolean(getOptionIcon),
   };
 
-  const labelClasses = {
-    [classes.optionLabel]: true,
-    [classes.optionLabelWithSublabel]: Boolean(getOptionLabel) && Boolean(getOptionSublabel),
-    [classes.optionLabelAlone]:
-      Boolean(getOptionLabel) && !Boolean(getOptionSublabel) && !Boolean(getOptionIcon),
+  const optionContainerClasses = {
+    [classes.optionsContainer]: true,
   };
-
-  const isOptionSelected = (item) => {
-    let isOptionSelected = false;
-    for (let i in value) {
-      if (value[i] === item) {
-        isOptionSelected = true;
-        break;
-      }
-    }
-    return isOptionSelected;
-  };
-
-  const isOptionDisabled = (item) => {
-    return Boolean(item.isDisabled);
-  };
-
-  return createPortal(
+  return (
     <div
       className={classNames({ ...optionContainerClasses })}
       style={{
         width: width,
+        ...(disablePortal
+          ? { backgroundColor: 'white', position: 'absolute', top: 0, left: 0, zIndex: 30000 }
+          : {}),
       }}
     >
       {options &&
@@ -143,8 +181,7 @@ const MenuOptions = ({
             </div>
           );
         })}
-    </div>,
-    optionsEl
+    </div>
   );
 };
 
@@ -158,6 +195,7 @@ MenuOptions.propTypes = {
   containerDimension: PropTypes.object.isRequired,
   value: PropTypes.array,
   portalContainerId: PropTypes.string.isRequired,
+  disablePortal: PropTypes.bool,
 };
 
 export default MenuOptions;

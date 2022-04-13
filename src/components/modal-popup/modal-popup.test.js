@@ -14,19 +14,19 @@ const props = {
     {
       text: 'Ok',
       type: 'primary',
-      clickHandler: okHandler,
+      onClick: okHandler,
       size: 'large',
     },
     {
       text: 'Cancel',
       type: 'secondary',
-      clickHandler: cancelHandler,
+      onClick: cancelHandler,
       size: 'large',
     },
     {
       text: 'Cancel',
       type: 'secondary',
-      clickHandler: cancelHandler,
+      onClick: cancelHandler,
       size: 'large',
     },
   ],

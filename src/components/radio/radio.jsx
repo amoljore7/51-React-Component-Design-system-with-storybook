@@ -37,30 +37,16 @@ const RadioGroup = ({
     [classes.radioContainer]: true,
     [classes.radioContainerVertical]: direction === vertical,
   };
-  const searchIndex = (value) => {
-    const resultIndex = options.findIndex((data) => data.value === value);
-    return resultIndex;
-  };
-
-  const [currentCheckedIndex, setCurrentCheckedIndex] = useState(searchIndex(defaultValue));
-
-  const changeHandler = (e) => {
-    const resultIndex = searchIndex(e.target.value);
-    setCurrentCheckedIndex(resultIndex);
-    onChange(e);
-  };
 
   return (
     <>
       <div className={classes.mainLabel}>{label}</div>
       <div data-testid={testId} className={classNames({ ...radioClass })}>
         {options.map(({ label, value, disabled }, index) => {
-          const reset = currentCheckedIndex !== index;
           const allProps = {
             name,
-            defaultValue,
-            changeHandler,
-            reset,
+            onChange,
+            selected: value === defaultValue,
             label,
             value,
             disabled,
@@ -77,14 +63,14 @@ const RadioGroup = ({
   );
 };
 
-const RadioButton = ({ name, label, value, disabled, reset, defaultValue, changeHandler }) => {
-  const [radioCheck, setRadioCheck] = useState(defaultValue === value);
+const RadioButton = ({ name, label, value, disabled, selected, onChange }) => {
+  const [radioCheck, setRadioCheck] = useState(selected);
   const [radioHover, setRadioHover] = useState(false);
   const [radioIcon, setRadioIcon] = useState(disabled ? unselectedDisabledRadio : unselectedRadio);
 
   useEffect(() => {
-    setRadioCheck(defaultValue === value);
-  }, [defaultValue]);
+    setRadioCheck(selected);
+  }, [selected]);
 
   const radioLabelClass = {
     [classes.labelContainer]: true,
@@ -129,9 +115,6 @@ const RadioButton = ({ name, label, value, disabled, reset, defaultValue, change
 
   useEffect(handleIconOnCheck, [radioCheck, disabled]);
   useEffect(handleIconOnHover, [radioHover]);
-  useEffect(() => {
-    reset && setRadioCheck(false);
-  }, [reset]);
 
   return (
     <>
@@ -139,14 +122,14 @@ const RadioButton = ({ name, label, value, disabled, reset, defaultValue, change
         <input
           role={radioType}
           type={radioType}
-          id={value}
+          id={`${name}${value}`}
           name={name}
           value={value}
           className={classes.radioBtnStyle}
           disabled={disabled}
-          onChange={(e) => {
+          onClick={(e) => {
             setRadioCheck(true);
-            changeHandler(e);
+            onChange(e);
           }}
           onMouseOver={() => {
             setRadioHover(true);
@@ -157,7 +140,7 @@ const RadioButton = ({ name, label, value, disabled, reset, defaultValue, change
         />
         <img role={imageRole} src={radioIcon} alt={iconAlt} />
       </div>
-      <label htmlFor={value} className={classNames({ ...radioLabelClass })}>
+      <label htmlFor={`${name}${value}`} className={classNames({ ...radioLabelClass })}>
         {label}
       </label>
     </>

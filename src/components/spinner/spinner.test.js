@@ -3,6 +3,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import Spinner from './spinner';
+import { classes } from './constants';
 
 const props = {
   size: 'medium',
@@ -13,7 +14,7 @@ const props = {
 describe('Spinner test cases', () => {
   it('Size passed as a props appears on the screen', () => {
     const { getByTestId } = render(<Spinner {...props} />);
-    expect(getByTestId('loader').classList.contains('loader-medium')).toBe(true);
+    expect(getByTestId(classes.loader).classList.contains(classes.mediumLoader)).toBe(true);
   });
 
   it('Message passed as a props appears on the screen', () => {
@@ -23,6 +24,6 @@ describe('Spinner test cases', () => {
 
   it('Overlay passed as a props appears on the screen', () => {
     const { getByTestId } = render(<Spinner {...props} />);
-    expect(getByTestId('loader-overlay').classList.contains('loader-overlay')).toBe(true);
+    expect(getByTestId(classes.loaderOverlay).classList.contains(classes.loaderOverlay)).toBe(true);
   });
 });

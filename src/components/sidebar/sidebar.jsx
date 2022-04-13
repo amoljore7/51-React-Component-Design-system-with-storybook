@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { classes } from './constants';
+import { classes, listRole } from './constants';
 import classNames from 'classnames';
 import './sidebar.scss';
 
@@ -19,43 +19,60 @@ const Sidebar = ({ sidebarData, open, menuTitle, history, onClose }) => {
     setCurrentItemIndex(itemIndex);
   };
   return (
-    <>
-      <nav className={classNames({ ...drawerClass })}>
-        <div className={classes.menuTitle}>
-          <span>{menuTitle}</span>
-        </div>
-        <ul role={classes.listRole} className={classes.drawerItems}>
-          {sidebarData &&
-            sidebarData.map((element, groupIndex) => {
-              return (
-                <>
-                  <div className={classes.groupHeader} key={`group-header-${groupIndex}`}>
-                    {element.GroupHeader}
-                  </div>
-                  {element.items &&
-                    element.items.map((item, itemIndex) => {
-                      const wasClicked =
-                        currentItemIndex === itemIndex && currentGroupIndex === groupIndex;
+    <nav className={classNames({ ...drawerClass })}>
+      <div className={classes.menuTitle}>
+        <span>{menuTitle}</span>
+      </div>
+      <ul role={listRole} className={classes.drawerItems}>
+        {sidebarData &&
+          sidebarData.map((element, groupIndex) => {
+            const menuGroupProps = {
+              element,
+              groupIndex,
+              currentGroupIndex,
+              currentItemIndex,
+              clickHandler,
+              onClose,
+              key: `menu-group-${groupIndex}`,
+            };
+            return <MenuGroup {...menuGroupProps} />;
+          })}
+      </ul>
+    </nav>
+  );
+};
 
-                      return (
-                        <MenuItem
-                          key={`group-menu-item-${itemIndex}`}
-                          groupIndex={groupIndex}
-                          itemIndex={itemIndex}
-                          wasClicked={wasClicked}
-                          route={item.route}
-                          icon={item.icon}
-                          title={item.title}
-                          clickHandler={clickHandler}
-                          onClose={onClose}
-                        />
-                      );
-                    })}
-                </>
-              );
-            })}
-        </ul>
-      </nav>
+const MenuGroup = ({
+  element,
+  groupIndex,
+  currentItemIndex,
+  currentGroupIndex,
+  clickHandler,
+  onClose,
+}) => {
+  return (
+    <>
+      <div className={classes.groupHeader} key={`${groupIndex}-`}>
+        {element.GroupHeader}
+      </div>
+      {element.items &&
+        element.items.map((item, itemIndex) => {
+          const wasClicked = currentItemIndex === itemIndex && currentGroupIndex === groupIndex;
+
+          return (
+            <MenuItem
+              key={`group-menu-item-${itemIndex}-${groupIndex}`}
+              groupIndex={groupIndex}
+              itemIndex={itemIndex}
+              wasClicked={wasClicked}
+              route={item.route}
+              icon={item.icon}
+              title={item.title}
+              clickHandler={clickHandler}
+              onClose={onClose}
+            />
+          );
+        })}
     </>
   );
 };

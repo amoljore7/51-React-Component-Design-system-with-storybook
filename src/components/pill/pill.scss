@@ -29,6 +29,7 @@ $pill-background-color: $default-page-bg;
 $pill-label-text-color: $gray-80;
 $pill-label-disabled-color: $gray-30;
 $pill-label-read-only-color: $unselected-tab-txt-color;
+$pill-label-max-width: getRem(384px);
 
 .bds-pill-container {
   width: fit-content;
@@ -67,12 +68,15 @@ $pill-label-read-only-color: $unselected-tab-txt-color;
   height: $pill-label-height;
   margin: $pill-label-margin-top $pill-label-margin-right $pill-label-margin-bottom
     $pill-label-margin-left;
-  display: flex;
-  justify-content: center;
+  display: inline;
   font-size: $pill-label-font-size;
   font-family: $font-type-01;
   letter-spacing: $pill-label-letter-spacing;
   color: $pill-label-text-color;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: $pill-label-max-width;
 }
 
 .bds-pill-label-disabled {

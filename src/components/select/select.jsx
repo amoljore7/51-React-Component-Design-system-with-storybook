@@ -22,6 +22,7 @@ const Select = ({
   placeholder,
   size = 'large',
   onBlur,
+  disablePortal = false,
 }) => {
   let optionSelected = Boolean(value) ? value : null;
   const [selectedValue, setSelectedValue] = useState(optionSelected);
@@ -111,66 +112,70 @@ const Select = ({
   };
 
   return (
-    <div className={classes.wrapper}>
-      {label && <div className={classNames({ ...labelClasses })}>{label}</div>}
-      {!readOnly && helperText && (
-        <div className={classNames({ ...helperTextClasses })}>{helperText}</div>
-      )}
-      <div
-        ref={selectRef}
-        className={classNames({ ...containerClasses })}
-        style={{ width: width }}
-        tabIndex={defaultTabIndex}
-        onBlur={blurHandler}
-      >
+    <>
+      <div className={classes.wrapper}>
+        {label && <div className={classNames({ ...labelClasses })}>{label}</div>}
+        {!readOnly && helperText && (
+          <div className={classNames({ ...helperTextClasses })}>{helperText}</div>
+        )}
         <div
-          data-testid="select-value"
-          className={classNames({ ...selectValueClasses })}
-          onClick={selectedValueClickHandler}
-          onKeyDown={selectedValueKeyDownHandler}
+          ref={selectRef}
+          className={classNames({ ...containerClasses })}
+          style={{ width: width }}
           tabIndex={defaultTabIndex}
+          onBlur={blurHandler}
         >
-          {selectedValue ? getOptionLabel(selectedValue) : readOnly ? 'None' : placeholder}
-        </div>
-        {!readOnly && (
-          <div className={classes.actionsContainer}>
-            <div
-              className={classNames({ ...actionsContainerItemClasses })}
-              onClick={selectedValueClickHandler}
-              onKeyDown={selectedValueKeyDownHandler}
-              tabIndex={defaultTabIndex}
-            >
-              {showOptions ? (
-                <IoChevronUp
-                  className={disabled ? classes.selectIconDisabled : classes.selectIcon}
-                  size={size === 'small' ? smallIconSize : defaultIconSize}
-                />
-              ) : (
-                <IoChevronDown
-                  className={disabled ? classes.selectIconDisabled : classes.selectIcon}
-                  size={size === 'small' ? smallIconSize : defaultIconSize}
-                />
-              )}
-            </div>
+          <div
+            data-testid="select-value"
+            className={classNames({ ...selectValueClasses })}
+            onClick={selectedValueClickHandler}
+            onKeyDown={selectedValueKeyDownHandler}
+            tabIndex={defaultTabIndex}
+          >
+            {selectedValue ? getOptionLabel(selectedValue) : readOnly ? 'None' : placeholder}
           </div>
-        )}
-        {showOptions && (
-          <MenuOptions
-            portalContainerId={'dropdown-components'}
-            containerDimension={containerDimension}
-            width={width}
-            options={options}
-            onChange={selectOption}
-            getOptionLabel={getOptionLabel}
-          />
-        )}
-      </div>
-      {error ? (
-        <div className={classes.selectErrorMessage} style={{ width: width }}>
-          {errorMessage}
+          {!readOnly && (
+            <div className={classes.actionsContainer}>
+              <div
+                className={classNames({ ...actionsContainerItemClasses })}
+                onClick={selectedValueClickHandler}
+                onKeyDown={selectedValueKeyDownHandler}
+                tabIndex={defaultTabIndex}
+              >
+                {showOptions ? (
+                  <IoChevronUp
+                    className={disabled ? classes.selectIconDisabled : classes.selectIcon}
+                    size={size === 'small' ? smallIconSize : defaultIconSize}
+                  />
+                ) : (
+                  <IoChevronDown
+                    className={disabled ? classes.selectIconDisabled : classes.selectIcon}
+                    size={size === 'small' ? smallIconSize : defaultIconSize}
+                  />
+                )}
+              </div>
+            </div>
+          )}
         </div>
-      ) : null}
-    </div>
+        {error ? (
+          <div className={classes.selectErrorMessage} style={{ width: width }}>
+            {errorMessage}
+          </div>
+        ) : null}
+      </div>
+
+      {showOptions && (
+        <MenuOptions
+          portalContainerId={'dropdown-components'}
+          containerDimension={containerDimension}
+          width={width}
+          options={options}
+          onChange={selectOption}
+          getOptionLabel={getOptionLabel}
+          disablePortal={disablePortal}
+        />
+      )}
+    </>
   );
 };
 

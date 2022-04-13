@@ -27,6 +27,10 @@ $blue-60: #0561a7;
   opacity: 0.8;
 }
 
+.bds-loader-overlay-on-container {
+  position: absolute;
+}
+
 .bds-loader-container {
   display: flex;
   flex-direction: column;

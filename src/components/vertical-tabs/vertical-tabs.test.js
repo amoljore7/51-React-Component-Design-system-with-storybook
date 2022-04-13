@@ -2,7 +2,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, fireEvent } from '@testing-library/react';
-import VerticalTabs from './vertical-tabs';
+import VerticalTabs from './verticalTabs';
 
 describe('Unit tests for vertical tab component', () => {
   const props = {

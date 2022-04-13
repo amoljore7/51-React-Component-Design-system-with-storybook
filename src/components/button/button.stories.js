@@ -1,5 +1,6 @@
 import Button from './button.jsx';
 import circularIcon from '../../story-assets/icons/circle.svg';
+import { FaBeer } from 'react-icons/fa';
 
 export default {
   title: 'design-components/Button',
@@ -26,6 +27,14 @@ export const TextOnly = () => {
   return (
     <Button variant="textOnly" size="large" onClick={() => alert('Button clicked')}>
       Button
+    </Button>
+  );
+};
+
+export const Icon = () => {
+  return (
+    <Button variant="textOnly" size="large" onClick={() => alert('Button clicked')}>
+      <FaBeer />
     </Button>
   );
 };

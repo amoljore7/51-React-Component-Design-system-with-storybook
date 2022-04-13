@@ -33,6 +33,8 @@ $tree-node-icon-size: getRem(24px);
 }
 .tree-node-container {
   height: fit-content;
+  min-width: $parent-container-width;
+  width: max-content;
   position: relative;
 }
 .tree-node-container:first-child {
@@ -67,6 +69,10 @@ $tree-node-icon-size: getRem(24px);
     display: flex;
     align-items: center;
   }
+  .tree-node-action-item-holder {
+    width: $tree-node-icon-size;
+    height: $tree-node-icon-size;
+  }
 }
 
 .tree-node-parent-icon {
@@ -96,6 +102,11 @@ $tree-node-icon-size: getRem(24px);
 
   .tree-node-content-box-left-wrapper {
     display: flex;
+  }
+  .tree-node-action-item-holder {
+    width: $tree-node-icon-size;
+    height: $tree-node-icon-size;
+    margin-right: $tree-node-icon-margin-right;
   }
 }
 .tree-node-content-box-icon {

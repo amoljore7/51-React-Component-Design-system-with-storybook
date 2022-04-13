@@ -21,6 +21,7 @@ const Button = ({
   onClick,
   disabled = false,
   type,
+  value,
 }) => {
   const btnClass = {
     [classes.button]: true,
@@ -40,6 +41,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       type={type}
+      value={value}
     >
       {children}
     </button>
@@ -48,11 +50,12 @@ const Button = ({
 
 Button.propTypes = {
   variant: PropTypes.string,
-  size: PropTypes.string.isRequired,
+  size: PropTypes.string,
   children: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   disabled: PropTypes.bool,
   type: PropTypes.string,
+  value: PropTypes.any,
 };
 
 export default Button;
